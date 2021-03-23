@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NHibernate" Version="5.3.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Base.Domain\Base.Domain.csproj" />
+    <ProjectReference Include="..\MyCloset.Domain\MyCloset.Domain.csproj" />
+    <ProjectReference Include="..\MyCloset.Infra.Abstractions\MyCloset.Infra.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

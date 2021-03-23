@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Base.Settings\Base.Settings.csproj" />
+    <ProjectReference Include="..\Infra.Abstractions\Infra.Abstractions.csproj" />
+    <ProjectReference Include="..\Infra.NH\Infra.NH.csproj" />
+    <ProjectReference Include="..\MyCloset.Infra.Abstractions\MyCloset.Infra.Abstractions.csproj" />
+    <ProjectReference Include="..\MyCloset.Infra.File\MyCloset.Infra.File.csproj" />
+    <ProjectReference Include="..\MyCloset.Infra.NH\MyCloset.Infra.NH.csproj" />
+    <ProjectReference Include="..\MyCloset.Services.Abstraction\MyCloset.Services.Abstractions.csproj" />
+    <ProjectReference Include="..\MyCloset.Services\MyCloset.Services.csproj" />
+    <ProjectReference Include="..\Util\Util.csproj" />
+  </ItemGroup>
+
+
+</Project>
