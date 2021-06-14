@@ -7,6 +7,7 @@ using MyCloset.Infra.Abstractions.Repositories;
 using MyCloset.Infra.File;
 using MyCloset.Services.Abstractions.CrudServices;
 using MyCloset.Services.Seed;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -36,21 +37,21 @@ namespace MyCloset.Services.CrudServices
 			ContextTools = contextTools;
 		}
 
-		public async Task<IEnumerable<Piece>> SaveFromFilesAsync(IFormFileCollection files, string hashedUserPath)
+		public async Task SaveFromFilesAsync(IFormFileCollection files, string hashedUserPath)
 		{
-			var pieces = new List<Piece>();
 			var todayDate = ContextTools.Today();
 			foreach (var file in files)
-			{
-				var fileName = ContextTools.GetFileName(file.FileName);
-				var hashedFileName = (fileName + ContextTools.Now().ToString()).Hash();
-				var extension = ContextTools.GetFileExtension(file.ContentType);
-				Files.Save(new HashableFile(file, hashedFileName, hashedUserPath, extension));
-				var piece = new Piece().Fill(fileName, hashedFileName, extension, hashedUserPath, todayDate);
-				var savedPiece = await SaveAsync(piece);
-				pieces.Add(savedPiece);
-			}
-			return pieces;
+				await SaveFromFileAsync(hashedUserPath, todayDate, file);
+		}
+
+		async Task SaveFromFileAsync(string hashedUserPath, DateTime todayDate, IFormFile file)
+		{
+			var fileName = ContextTools.GetFileName(file.FileName);
+			var hashedFileName = (fileName + ContextTools.Now().ToString()).Hash();
+			var extension = ContextTools.GetFileExtension(file.ContentType);
+			Files.Save(new HashableFile(file, hashedFileName, hashedUserPath, extension));
+			var piece = new Piece().Fill(fileName, hashedFileName, extension, hashedUserPath, todayDate);
+			await SaveAsync(piece);
 		}
 
 		public new async Task RemoveAsync(long id)

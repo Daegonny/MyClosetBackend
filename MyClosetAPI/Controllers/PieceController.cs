@@ -66,8 +66,11 @@ namespace MyClosetAPI.Controllers
 		}
 
 		[HttpPost("SaveFromFiles")]
-		public async Task<ActionResult<IEnumerable<Piece>>> SaveFromFilesAsync([FromForm] IFormFileCollection files) 
-			=> Ok(await PieceService.SaveFromFilesAsync(files, ContextTools.DefaultUserPath()));
+		public async Task<ActionResult<IEnumerable<Piece>>> SaveFromFilesAsync([FromForm] IFormFileCollection files)
+		{
+			await PieceService.SaveFromFilesAsync(files, ContextTools.DefaultUserPath());
+			return Ok();
+		} 
 
 		[HttpDelete("{id}")]
 		public async Task<ActionResult> Remove(long id)

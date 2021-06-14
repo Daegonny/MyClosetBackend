@@ -11,6 +11,6 @@ namespace MyCloset.Services.Abstractions.CrudServices
 	public interface IPieceService : ICrudService<Piece, IPieceQueryFilter, PieceModel>
 	{
 		Task RemoveAsync(IEnumerable<long> ids);
-		Task<IEnumerable<Piece>> SaveFromFilesAsync(IFormFileCollection files, string hashedPath);
+		Task SaveFromFilesAsync(IFormFileCollection files, string hashedUserPath);
 	}
 }

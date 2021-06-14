@@ -85,7 +85,7 @@ namespace Infra.NH
 			=> await PagedAsync(queryFilter.ApplyFilters(Query()), start, quantity);
 
 		public async Task<IEnumerable<T>> PagedAsync(IQueryOver<T,T> query, int start, int quantity)
-			=> await query.OrderBy(q => q.Creation).Asc().Skip(start).Take(quantity).ListAsync();
+			=> await query.OrderBy(q => q.Creation).Desc().Skip(start).Take(quantity).ListAsync();
 
 		public async Task<int> FilteredRowCountAsync(Q queryFilter)
 			=> await queryFilter.ApplyFilters(Query()).Select(Projections.CountDistinct(Projections.Id())).SingleOrDefaultAsync<int>();
