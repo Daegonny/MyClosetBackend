@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Util.Extensions
 {
@@ -24,5 +25,8 @@ namespace Util.Extensions
 		{
 			return JsonConvert.SerializeObject(obj);
 		}
+
+		public static IEnumerable<T> AsList<T>(this T value)
+			=> new List<T> { value };
 	}
 }

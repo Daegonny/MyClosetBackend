@@ -12,6 +12,7 @@ using MyCloset.Infra.File;
 using MyCloset.Infra.NH.Repositories;
 using MyCloset.Services.Abstractions.CrudServices;
 using MyCloset.Services.CrudServices;
+using MyClosetAPI.Filters;
 using Util.Config;
 using Util.Services;
 
@@ -45,8 +46,10 @@ namespace MyClosetAPI
 				.AddScoped<IPieces, Pieces>()
 				.AddScoped<IPieceService, PieceService>()
 				.AddScoped<ITagService, TagService>()
-				.AddControllers(options
-			   => options.Filters.Add(typeof(NHibernateUnitOfWorkActionFilter)));
+				.AddControllers(options => {
+					options.Filters.Add(typeof(NHibernateUnitOfWorkActionFilter));
+					options.Filters.Add(typeof(HttpResponseExceptionFilter));
+				});
 			services.AddSwaggerGen(c => c.SwaggerDoc(name: "v1", new OpenApiInfo() { Title = "MyCloset", Version = "v0.1" }));
 		}
 
