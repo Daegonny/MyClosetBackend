@@ -1,5 +1,4 @@
-﻿using Infra.Abstractions;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using MyCloset.Domain.Entities;
 using MyCloset.Domain.Models;
 using MyCloset.Infra.Abstractions.QueryFilters;
