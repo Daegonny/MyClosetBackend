@@ -1,4 +1,4 @@
-﻿using Exceptions;
+﻿using Exceptions.Base;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Net;
 

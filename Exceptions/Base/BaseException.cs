@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 
-namespace Exceptions
+namespace Exceptions.Base
 {
 	public abstract class BaseException : Exception
 	{

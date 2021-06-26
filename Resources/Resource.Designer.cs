@@ -61,20 +61,29 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Não foi possível encontrar os registros {0}.
+        ///   Looks up a localized string similar to Não foi possível encontrar as entidades {0}..
         /// </summary>
-        public static string NotFoundMultiple {
+        public static string EntityNotFoundMultiple {
             get {
-                return ResourceManager.GetString("NotFoundMultiple", resourceCulture);
+                return ResourceManager.GetString("EntityNotFoundMultiple", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Não foi possível encontrar o registro {0}..
+        ///   Looks up a localized string similar to Não foi possível encontrar a entidade {0}..
         /// </summary>
-        public static string NotFoundSingle {
+        public static string EntityNotFoundSingle {
             get {
-                return ResourceManager.GetString("NotFoundSingle", resourceCulture);
+                return ResourceManager.GetString("EntityNotFoundSingle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Não foi possível encontrar arquivo {0}..
+        /// </summary>
+        public static string FileNotFound {
+            get {
+                return ResourceManager.GetString("FileNotFound", resourceCulture);
             }
         }
     }

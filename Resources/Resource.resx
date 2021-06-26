@@ -117,10 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="NotFoundMultiple" xml:space="preserve">
-    <value>Não foi possível encontrar os registros {0}</value>
+  <data name="EntityNotFoundMultiple" xml:space="preserve">
+    <value>Não foi possível encontrar as entidades {0}.</value>
   </data>
-  <data name="NotFoundSingle" xml:space="preserve">
-    <value>Não foi possível encontrar o registro {0}.</value>
+  <data name="EntityNotFoundSingle" xml:space="preserve">
+    <value>Não foi possível encontrar a entidade {0}.</value>
+  </data>
+  <data name="FileNotFound" xml:space="preserve">
+    <value>Não foi possível encontrar arquivo {0}.</value>
   </data>
 </root>

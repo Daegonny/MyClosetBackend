@@ -1,4 +1,4 @@
-﻿using Exceptions;
+﻿using Exceptions.NotFound;
 using Newtonsoft.Json;
 
 namespace Util.Extensions
@@ -8,7 +8,7 @@ namespace Util.Extensions
 		public static T AssertIsNotNull<T>(this T obj, long id)
 		{
 			if (obj.IsNull())
-				throw new NotFoundException(id);
+				throw new EntityNotFoundException(id);
 			return obj;
 		}
 

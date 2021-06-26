@@ -2,7 +2,7 @@
 using System;
 using System.Net;
 
-namespace Exceptions
+namespace Exceptions.Base
 {
 	public class ResponseResult
 	{
