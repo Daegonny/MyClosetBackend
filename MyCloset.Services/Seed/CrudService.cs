@@ -29,9 +29,11 @@ namespace MyCloset.Services.Seed
 		public async Task<IEnumerable<T>> AllValidAsync() => await Repository.AllValidAsync();
 
 		public async Task<T> ByIdAsync(long id) 
-			=> await Repository.ByIdAsync(id).AssertIsNotNull(id);
+			=> (await Repository.ByIdAsync(id)).AssertIsNotNull(id);
 
-		public async Task<IEnumerable<T>> ByIdsAsync(IEnumerable<long> ids) => await Repository.ByIdsAsync(ids);
+		public async Task<IEnumerable<T>> ByIdsAsync(IEnumerable<long> ids) 
+			=> (await Repository.ByIdsAsync(ids))
+			.AssertContainsAll<T>(ids, t => t.Id.GetValueOrDefault());
 
 		public async Task DisableAsync(long id) => await Repository.DisableAsync(id);
 

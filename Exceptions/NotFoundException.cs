@@ -11,9 +11,9 @@ namespace Exceptions
 
 		public NotFoundException(long id) 
 			: base(string.Format(Resource.NotFoundSingle, id)) { }
-
+		
 		public NotFoundException(IEnumerable<long> ids)
-			: base(string.Format(Resource.NotFoundSingle, string.Join(", ", ids))) { }
+			: base(string.Format(Resource.NotFoundMultiple, string.Join(", ", ids))) { }
 
 		public override ObjectResult ToObjectResult() 
 			=> new ResponseResult(this).AsObjectResult(HttpStatusCode.NotFound);
