@@ -1,10 +1,17 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using Exceptions;
+using Newtonsoft.Json;
 
 namespace Util.Extensions
 {
 	public static class ObjectExtensions
 	{
+		public static T AssertIsNotNull<T>(this T obj, long id)
+		{
+			if (obj.IsNull())
+				throw new NotFoundException(id);
+			return obj;
+		}
+
 		public static bool IsNull(this object obj)
 		{
 			return obj == null;
@@ -25,8 +32,5 @@ namespace Util.Extensions
 		{
 			return JsonConvert.SerializeObject(obj);
 		}
-
-		public static IEnumerable<T> AsList<T>(this T value)
-			=> new List<T> { value };
 	}
 }

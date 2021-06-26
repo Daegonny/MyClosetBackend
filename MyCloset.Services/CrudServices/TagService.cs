@@ -29,7 +29,7 @@ namespace MyCloset.Services.CrudServices
 			return tagsOnBaseDictionary.Merge(newSavedTags, t => t.Name);
 		}
 
-		private static List<Tag> TagsNotOnBaseDictionary(IEnumerable<string> tagModelNames, Dictionary<string, Tag> tagsOnBaseDictionary)
+		List<Tag> TagsNotOnBaseDictionary(IEnumerable<string> tagModelNames, Dictionary<string, Tag> tagsOnBaseDictionary)
 		{
 			var tagsToSave = new List<Tag>();
 			foreach (var tagModelName in tagModelNames)
@@ -38,7 +38,7 @@ namespace MyCloset.Services.CrudServices
 			return tagsToSave;
 		}
 
-		private async Task<Dictionary<string, Tag>> ByNamesAsync(IEnumerable<string> tagNames) 
+		async Task<Dictionary<string, Tag>> ByNamesAsync(IEnumerable<string> tagNames) 
 			=> (await Tags.ByNamesAsync(tagNames)).ToDictionary(t => t.Name, t => t);
 	}
 }

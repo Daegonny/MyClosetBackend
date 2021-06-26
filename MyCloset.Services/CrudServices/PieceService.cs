@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Exceptions;
+using Microsoft.AspNetCore.Http;
 using MyCloset.Domain.Entities;
 using MyCloset.Domain.Models;
 using MyCloset.Infra.Abstractions.QueryFilters;

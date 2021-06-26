@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Base.Settings\Base.Settings.csproj" />
+    <ProjectReference Include="..\Exceptions\Exceptions.csproj" />
     <ProjectReference Include="..\Infra.Abstractions\Infra.Abstractions.csproj" />
     <ProjectReference Include="..\Infra.NH\Infra.NH.csproj" />
     <ProjectReference Include="..\MyCloset.Infra.Abstractions\MyCloset.Infra.Abstractions.csproj" />

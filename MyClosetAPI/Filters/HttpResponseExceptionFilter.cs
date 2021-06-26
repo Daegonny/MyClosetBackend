@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
-using MyClosetAPI.Settings;
+﻿using Exceptions;
+using Microsoft.AspNetCore.Mvc.Filters;
 using System.Net;
 
 namespace MyClosetAPI.Filters
@@ -8,7 +8,9 @@ namespace MyClosetAPI.Filters
 	{
 		public void OnException(ExceptionContext context)
 		{
-			context.Result = new ResponseResult(context.Exception).AsObjectResult(HttpStatusCode.InternalServerError);
+			context.Result = context.Exception is BaseException
+				? ((BaseException) context.Exception).ToObjectResult()
+				: new ResponseResult(context.Exception).AsObjectResult(HttpStatusCode.InternalServerError);
 			context.ExceptionHandled = true;
 		}
 	}
