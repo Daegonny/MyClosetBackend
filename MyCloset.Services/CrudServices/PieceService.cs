@@ -1,4 +1,4 @@
-﻿using Infra.Abstractions;
+﻿using Exceptions;
 using Microsoft.AspNetCore.Http;
 using MyCloset.Domain.Entities;
 using MyCloset.Domain.Models;
@@ -63,7 +63,7 @@ namespace MyCloset.Services.CrudServices
 
 		public async Task RemoveAsync(IEnumerable<long> ids)
 		{
-			var pieces = await Pieces.ByIdsAsync(ids);
+			var pieces = await ByIdsAsync(ids);
 			var piecesToRemoveTasks = new List<Task>();
 			foreach(var piece in pieces)
 			{
