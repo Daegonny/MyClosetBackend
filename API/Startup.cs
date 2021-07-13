@@ -1,11 +1,19 @@
 using Base.Settings.Facilities;
+using Base.Settings.Filters;
+using Infra.NH.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using MyCloset.Infra.Abstractions.Repositories;
+using MyCloset.Infra.File;
+using MyCloset.Infra.NH.Repositories;
+using MyCloset.Services.Abstractions.CrudServices;
+using MyCloset.Services.CrudServices;
 using Util.Config;
+using Util.Services;
 
 namespace API
 {
@@ -26,7 +34,22 @@ namespace API
 		public void ConfigureServices(IServiceCollection services)
 		{
 
-			services.AddControllers();
+			services
+				.AddSingleton(Settings)
+				.AddSingleton(PathConfig)
+				.AddSingleton<IContextTools, ContextTools>()
+				.AddNHibernate(SettingsReader.Get().ConnectionString)
+				.AddScoped<NHibernateUnitOfWorkActionFilter>()
+				.AddScoped<IContextTools, ContextTools>()
+				.AddScoped<ITags, Tags>()
+				.AddScoped<IFiles, Files>()
+				.AddScoped<IPieces, Pieces>()
+				.AddScoped<IPieceService, PieceService>()
+				.AddScoped<ITagService, TagService>()
+				.AddControllers(options => {
+					options.Filters.Add(typeof(NHibernateUnitOfWorkActionFilter));
+					options.Filters.Add(typeof(HttpResponseExceptionFilter));
+				});
 			services.AddSwaggerGen(c =>
 			{
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });

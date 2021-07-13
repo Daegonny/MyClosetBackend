@@ -10,6 +10,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Base.Settings\Base.Settings.csproj" />
+    <ProjectReference Include="..\MyCloset.Infra.File\MyCloset.Infra.File.csproj" />
+    <ProjectReference Include="..\MyCloset.Infra.NH\MyCloset.Infra.NH.csproj" />
+    <ProjectReference Include="..\MyCloset.Services.Abstraction\MyCloset.Services.Abstractions.csproj" />
+    <ProjectReference Include="..\MyCloset.Services\MyCloset.Services.csproj" />
   </ItemGroup>
 
 </Project>
