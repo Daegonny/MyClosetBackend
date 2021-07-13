@@ -1,9 +1,17 @@
-﻿using Newtonsoft.Json;
+﻿using Exceptions.NotFound;
+using Newtonsoft.Json;
 
 namespace Util.Extensions
 {
 	public static class ObjectExtensions
 	{
+		public static T AssertIsNotNull<T>(this T obj, long id)
+		{
+			if (obj.IsNull())
+				throw new EntityNotFoundException(id);
+			return obj;
+		}
+
 		public static bool IsNull(this object obj)
 		{
 			return obj == null;

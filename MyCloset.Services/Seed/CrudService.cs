@@ -5,6 +5,7 @@ using NHibernate;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Util.Extensions;
 using Util.Services;
 
 namespace MyCloset.Services.Seed
@@ -27,9 +28,12 @@ namespace MyCloset.Services.Seed
 
 		public async Task<IEnumerable<T>> AllValidAsync() => await Repository.AllValidAsync();
 
-		public async Task<T> ByIdAsync(long id) => await Repository.ByIdAsync(id);
+		public async Task<T> ByIdAsync(long id) 
+			=> (await Repository.ByIdAsync(id)).AssertIsNotNull(id);
 
-		public async Task<IEnumerable<T>> ByIdsAsync(IEnumerable<long> ids) => await Repository.ByIdsAsync(ids);
+		public async Task<IEnumerable<T>> ByIdsAsync(IEnumerable<long> ids) 
+			=> (await Repository.ByIdsAsync(ids))
+			.AssertContainsAll<T>(ids, t => t.Id.GetValueOrDefault());
 
 		public async Task DisableAsync(long id) => await Repository.DisableAsync(id);
 
@@ -58,7 +62,7 @@ namespace MyCloset.Services.Seed
 		public virtual async Task UpdateAsync(M model)
 		{
 			var entity = await ByIdAsync(model.Id.Value);
-			entity.Updation = ContextTools.Now();
+			entity.LastUpdate = ContextTools.Now();
 			await UpdateAsync(model.Update(entity));
 		}
 
@@ -70,7 +74,7 @@ namespace MyCloset.Services.Seed
 			var entitiesToUpdateTasks = new List<Task>();
 			foreach(var entity in entities)
 			{
-				entity.Updation = ContextTools.Now();
+				entity.LastUpdate = ContextTools.Now();
 				entitiesToUpdateTasks.Add(UpdateAsync(dictModels[entity.Id].Update(entity)));
 			}
 			await Task.WhenAll(entitiesToUpdateTasks.ToArray());
