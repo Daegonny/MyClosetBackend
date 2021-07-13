@@ -10,7 +10,7 @@ namespace Base.Domain
 		[JsonIgnore]
 		public virtual DateTime? Creation { get; set; }
 		[JsonIgnore]
-		public virtual DateTime? Updation { get; set; }
+		public virtual DateTime? LastUpdate { get; set; }
 		[JsonIgnore]
 		public virtual DateTime? Exclusion { get; set; }
 

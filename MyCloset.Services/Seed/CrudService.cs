@@ -62,7 +62,7 @@ namespace MyCloset.Services.Seed
 		public virtual async Task UpdateAsync(M model)
 		{
 			var entity = await ByIdAsync(model.Id.Value);
-			entity.Updation = ContextTools.Now();
+			entity.LastUpdate = ContextTools.Now();
 			await UpdateAsync(model.Update(entity));
 		}
 
@@ -74,7 +74,7 @@ namespace MyCloset.Services.Seed
 			var entitiesToUpdateTasks = new List<Task>();
 			foreach(var entity in entities)
 			{
-				entity.Updation = ContextTools.Now();
+				entity.LastUpdate = ContextTools.Now();
 				entitiesToUpdateTasks.Add(UpdateAsync(dictModels[entity.Id].Update(entity)));
 			}
 			await Task.WhenAll(entitiesToUpdateTasks.ToArray());

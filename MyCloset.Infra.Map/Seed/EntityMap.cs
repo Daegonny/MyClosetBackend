@@ -11,7 +11,7 @@ namespace MyCloset.Infra.Map.Seed
 			Id(x => x.Id).GeneratedBy.Identity();
 			Map(x => x.Name);
 			Map(x => x.Creation);
-			Map(x => x.Updation);
+			Map(x => x.LastUpdate).Column("last_update");
 			Map(x => x.Exclusion);
 		}
 	}
