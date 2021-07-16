@@ -1,10 +1,9 @@
-﻿using MyCloset.Domain.Entities;
-using System;
+﻿using System.Threading.Tasks;
 
 namespace Auth.Abstractions
 {
 	public interface IAuthService
 	{
-		public User Login(string userName, string password);
+		public Task<string> Login(string userName, string password);
 	}
 }

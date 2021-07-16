@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Auth.Abstractions\Auth.Abstractions.csproj" />
+    <ProjectReference Include="..\MyCloset.Infra.Abstractions\MyCloset.Infra.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

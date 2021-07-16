@@ -1,3 +1,5 @@
+using Auth;
+using Auth.Abstractions;
 using Base.Settings.Facilities;
 using Base.Settings.Filters;
 using Infra.NH.Extensions;
@@ -19,12 +21,14 @@ namespace API
 {
 	public class Startup
 	{
-		ISettingsModel Settings;
-		IPathConfig PathConfig;
+		public ISettingsModel Settings { get; set; }
+		public IPathConfig PathConfig { get; set; }
+		public ITokenConfig TokenConfig { get; set; }
 		public Startup(IConfiguration configuration)
 		{
 			Configuration = configuration;
 			Settings = SettingsReader.Get();
+			TokenConfig = new TokenConfig(120, "BCFB662B-E07B-40E4-AA45-6ECF4B55D68E", "default_issuer", "default_audience");
 			PathConfig = new PathConfig(Settings.DefaultUserPath, Settings.DefaultBasePath);
 		}
 
@@ -37,6 +41,7 @@ namespace API
 			services
 				.AddSingleton(Settings)
 				.AddSingleton(PathConfig)
+				.AddSingleton(TokenConfig)
 				.AddSingleton<IContextTools, ContextTools>()
 				.AddNHibernate(SettingsReader.Get().ConnectionString)
 				.AddScoped<NHibernateUnitOfWorkActionFilter>()
@@ -44,8 +49,11 @@ namespace API
 				.AddScoped<ITags, Tags>()
 				.AddScoped<IFiles, Files>()
 				.AddScoped<IPieces, Pieces>()
+				.AddScoped<IUsers, Users>()
 				.AddScoped<IPieceService, PieceService>()
 				.AddScoped<ITagService, TagService>()
+				.AddScoped<ITokenService, TokenService>()
+				.AddScoped<IAuthService, AuthService>()
 				.AddControllers(options => {
 					options.Filters.Add(typeof(NHibernateUnitOfWorkActionFilter));
 					options.Filters.Add(typeof(HttpResponseExceptionFilter));

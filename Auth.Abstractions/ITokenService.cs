@@ -4,6 +4,6 @@ namespace Auth.Abstractions
 {
 	public interface ITokenService
 	{
-		void AddTo(User user);
+		User AddTokenTo(User user);
 	}
 }

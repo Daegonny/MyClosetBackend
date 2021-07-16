@@ -1,20 +1,21 @@
 ﻿using Auth.Abstractions;
-using MyCloset.Domain.Entities;
-using System;
+using MyCloset.Infra.Abstractions.Repositories;
+using System.Threading.Tasks;
 
 namespace Auth
 {
 	public class AuthService : IAuthService
 	{
 		ITokenService TokenService { get; }
-		public AuthService(ITokenService tokenService)
+		IUsers Users { get; }
+
+		public AuthService(ITokenService tokenService, IUsers users)
 		{
 			TokenService = tokenService;
+			Users = users;
 		}
 
-		public User Login(string userName, string password)
-		{
-			throw new NotImplementedException();
-		}
+		public async Task<string> Login(string userName, string password) 
+			=> TokenService.AddTokenTo(await Users.Login(userName, password)).Token;
 	}
 }
