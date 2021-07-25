@@ -1,4 +1,5 @@
 ﻿using Auth.Abstractions;
+using Exceptions.Auth;
 using Infra.NH;
 using MyCloset.Domain.Entities;
 using MyCloset.Infra.Abstractions.QueryFilters;
@@ -20,7 +21,7 @@ namespace MyCloset.Infra.NH.Repositories
 		{
 			var account = await Query().Where(u => u.Email == email && u.Password == password).SingleOrDefaultAsync();
 			if (account.IsNull())
-				throw new System.Exception("aaaaaaaaa");
+				throw new LoginFailedException();
 			return account;
 		}
 	}
