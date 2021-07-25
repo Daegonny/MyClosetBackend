@@ -16,7 +16,7 @@ namespace API.Controllers
 
 		[HttpPost("login")]
 		public async Task<ActionResult<string>> Login(LoginModel loginModel) 
-			=> Ok(await AuthService.Login(loginModel.userName, loginModel.password));
+			=> Ok(await AuthService.Login(loginModel.Email, loginModel.Password));
 
 	}
 }

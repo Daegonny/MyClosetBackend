@@ -16,9 +16,9 @@ namespace MyCloset.Infra.NH.Repositories
 		{
 		}
 
-		public async Task<Account> Login(string name, string password) //TODO: criptografar password
+		public async Task<Account> Login(string email, string password) //TODO: criptografar password
 		{
-			var account = await Query().Where(u => u.Name == name && u.Password == password).SingleOrDefaultAsync();
+			var account = await Query().Where(u => u.Email == email && u.Password == password).SingleOrDefaultAsync();
 			if (account.IsNull())
 				throw new System.Exception("aaaaaaaaa");
 			return account;

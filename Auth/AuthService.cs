@@ -15,7 +15,7 @@ namespace Auth
 			Users = users;
 		}
 
-		public async Task<string> Login(string userName, string password) 
-			=> TokenService.AddTokenTo(await Users.Login(userName, password)).Token;
+		public async Task<string> Login(string email, string password) 
+			=> TokenService.AddTokenTo(await Users.Login(email, password)).Token;
 	}
 }
