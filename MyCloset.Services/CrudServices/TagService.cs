@@ -16,7 +16,7 @@ namespace MyCloset.Services.CrudServices
 	public class TagService : CrudService<Tag, ITagQueryFilter, TagModel>, ITagService
 	{
 		ITags Tags { get; }
-		public TagService(ITags tags, IContextTools contextTools, IUserProvider userProvider) 
+		public TagService(ITags tags, IContextTools contextTools, IAccountProvider userProvider) 
 			: base(tags, contextTools, userProvider)
 		{
 			Tags = tags;

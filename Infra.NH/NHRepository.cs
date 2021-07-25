@@ -1,9 +1,10 @@
-﻿using Base.Domain;
+﻿using Auth.Abstractions;
+using Base.Domain;
 using Infra.Abstractions;
+using MyCloset.Domain.Entities;
 using NHibernate;
 using NHibernate.Criterion;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Util.Services;
 
@@ -13,18 +14,32 @@ namespace Infra.NH
 		where T : Entity, new()
 		where Q : IQueryFilter<T>
 	{
-		protected NHRepository(IUnitOfWork unitOfWork, IContextTools contextTools)
+		IUnitOfWork UnitOfWork { get; }
+		IContextTools ContextTools { get; }
+		Account LoggedUser { get; }
+
+		T Alias = null;
+		protected NHRepository
+		(
+			IUnitOfWork unitOfWork, 
+			IContextTools contextTools, 
+			IAccountProvider accountProvider
+		)
 		{
 			UnitOfWork = unitOfWork;
 			ContextTools = contextTools;
+			LoggedUser = accountProvider.GetLoggedUser();
 		}
 
-		IUnitOfWork UnitOfWork { get; }
-		IContextTools ContextTools { get; }
-		T Alias = null;
 
 		protected virtual IQueryOver<T, T> Query()
-			=> UnitOfWork.Session.QueryOver<T>(() => Alias);
+		{
+			if (typeof(IHaveOwner).IsAssignableFrom(typeof(T)))
+				return UnitOfWork.Session.QueryOver<T>(() => Alias)
+					.Where(T => ((IHaveOwner) T).Account.Id == LoggedUser.Id);
+			else 
+				return UnitOfWork.Session.QueryOver<T>(() => Alias);
+		}
 
 		public async Task<IEnumerable<T>> AllAsync()
 			=> await Query().ListAsync<T>();
@@ -69,9 +84,7 @@ namespace Infra.NH
 		{
 			var savedEntities = new List<T>();
 			foreach(var entity in entities)
-			{
 				savedEntities.Add(await SaveAsync(entity));
-			}
 			return savedEntities;
 		}
 

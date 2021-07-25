@@ -19,13 +19,13 @@ namespace MyCloset.Services.Seed
 
 		IRepository<T, Q> Repository { get; }
 		IContextTools ContextTools { get; }
-		IUserProvider UserProvider { get; }
+		IAccountProvider UserProvider { get; }
 
 		public CrudService
 		(
 			IRepository<T, Q> repository, 
 			IContextTools contextTools, 
-			IUserProvider userProvider
+			IAccountProvider userProvider
 		)
 		{
 			Repository = repository;
@@ -33,11 +33,8 @@ namespace MyCloset.Services.Seed
 			UserProvider = userProvider;
 		}
 
-		public async Task<IEnumerable<T>> AllAsync()
-		{
-			var user = UserProvider.GetLoggedUser();
-			return await Repository.AllAsync();
-		}
+		public async Task<IEnumerable<T>> AllAsync() 
+			=> await Repository.AllAsync();
 
 		public async Task<IEnumerable<T>> AllValidAsync() => await Repository.AllValidAsync();
 

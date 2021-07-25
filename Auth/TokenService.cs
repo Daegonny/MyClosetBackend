@@ -20,16 +20,16 @@ namespace Auth
 			ContextTools = contextTools;
 		}
 
-		public User AddTokenTo(User user) 
+		public Account AddTokenTo(Account user) 
 			=> user.AddToken(new JwtSecurityTokenHandler().WriteToken(GetJwtToken(GetClaims(user), GetCredentials())));
 
-		private IEnumerable<Claim> GetClaims(User user)
+		private IEnumerable<Claim> GetClaims(Account user)
 			=> new[]
 			{
-				new Claim("Id", user.Id.ToString()),
-				new Claim("Email", user.Email),
-				new Claim("Name", user.Name),
-				new Claim("Path", user.Name),
+				new Claim(nameof(Account.Id), user.Id.ToString()),
+				new Claim(nameof(Account.Email), user.Email),
+				new Claim(nameof(Account.Name), user.Name),
+				new Claim(nameof(Account.HashedFilePath), user.HashedFilePath),
 			};
 
 		private SigningCredentials GetCredentials()

@@ -22,7 +22,7 @@ namespace MyCloset.Services.CrudServices
 		IFiles Files { get; }
 		ITagService TagService { get; }
 		IContextTools ContextTools { get; }
-		IUserProvider UserProvider { get; }
+		IAccountProvider UserProvider { get; }
 
 		public PieceService
 		(
@@ -30,7 +30,7 @@ namespace MyCloset.Services.CrudServices
 			IFiles files,
 			ITagService tagService,
 			IContextTools contextTools,
-			IUserProvider userProvider
+			IAccountProvider userProvider
 		) : base(pieces, contextTools, userProvider)
 		{
 			Files = files;

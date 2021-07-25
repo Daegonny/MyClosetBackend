@@ -7,9 +7,9 @@ namespace Auth
 	public class AuthService : IAuthService
 	{
 		ITokenService TokenService { get; }
-		IUsers Users { get; }
+		IAccounts Users { get; }
 
-		public AuthService(ITokenService tokenService, IUsers users)
+		public AuthService(ITokenService tokenService, IAccounts users)
 		{
 			TokenService = tokenService;
 			Users = users;
