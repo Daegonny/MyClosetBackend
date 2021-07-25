@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace MyCloset.Infra.Abstractions.Repositories
 {
-	public interface IUsers : IRepository<User, IUserQueryFilter>
+	public interface IAccounts : IRepository<Account, IAccountQueryFilter>
 	{
-		Task<User> Login(string name, string password);
+		Task<Account> Login(string name, string password);
 	}
 }

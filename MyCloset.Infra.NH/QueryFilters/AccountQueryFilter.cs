@@ -5,5 +5,5 @@ using MyCloset.Infra.NH.QueryFilters.Seed;
 
 namespace MyCloset.Infra.NH.QueryFilters
 {
-	public class UserQueryFilter : EntityQueryFilter<User>, IQueryFilter<User>, IUserQueryFilter {}
+	public class AccountQueryFilter : EntityQueryFilter<Account>, IQueryFilter<Account>, IAccountQueryFilter {}
 }
