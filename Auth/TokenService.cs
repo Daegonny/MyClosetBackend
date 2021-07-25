@@ -26,7 +26,10 @@ namespace Auth
 		private IEnumerable<Claim> GetClaims(User user)
 			=> new[]
 			{
-				new Claim(ClaimTypes.Name, user.Name),
+				new Claim("Id", user.Id.ToString()),
+				new Claim("Email", user.Email),
+				new Claim("Name", user.Name),
+				new Claim("Path", user.Name),
 			};
 
 		private SigningCredentials GetCredentials()

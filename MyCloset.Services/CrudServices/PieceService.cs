@@ -1,4 +1,5 @@
-﻿using Exceptions;
+﻿using Auth.Abstractions;
+using Exceptions;
 using Microsoft.AspNetCore.Http;
 using MyCloset.Domain.Entities;
 using MyCloset.Domain.Models;
@@ -18,23 +19,24 @@ namespace MyCloset.Services.CrudServices
 {
 	public class PieceService : CrudService<Piece, IPieceQueryFilter, PieceModel>, IPieceService
 	{
-		IPieces Pieces { get; }
 		IFiles Files { get; }
 		ITagService TagService { get; }
 		IContextTools ContextTools { get; }
+		IUserProvider UserProvider { get; }
 
 		public PieceService
 		(
 			IPieces pieces, 
 			IFiles files,
 			ITagService tagService,
-			IContextTools contextTools
-		) : base(pieces, contextTools)
+			IContextTools contextTools,
+			IUserProvider userProvider
+		) : base(pieces, contextTools, userProvider)
 		{
-			Pieces = pieces;
 			Files = files;
 			TagService = tagService;
 			ContextTools = contextTools;
+			UserProvider = userProvider;
 		}
 
 		public async Task SaveFromFilesAsync(IFormFileCollection files, string hashedUserPath)

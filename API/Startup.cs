@@ -18,6 +18,7 @@ using Util.Config;
 using Util.Services;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.AspNetCore.Http;
 
 namespace API
 {
@@ -51,7 +52,8 @@ namespace API
 			services
 				.AddSingleton(PathConfig)
 				.AddSingleton(TokenConfig)
-				.AddSingleton<IContextTools, ContextTools>()
+				.AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
+				.AddScoped<IUserProvider, UserProvider>()
 				.AddNHibernate(ConnectionString)
 				.AddScoped<NHibernateUnitOfWorkActionFilter>()
 				.AddScoped<IContextTools, ContextTools>()

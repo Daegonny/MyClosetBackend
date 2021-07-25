@@ -15,7 +15,7 @@ namespace MyCloset.Infra.NH.Repositories
 
 		public Task<User> Login(string name, string password) //TODO: criptografar password
 		{
-			return Task.FromResult(new User() { Name = "Igor", Id = 1 });
+			return Task.FromResult(new User() { Name = "Igor", Id = 1, Email = "igorchagasm@hotmail.com", Path = "mycloset" });
 		}
 			//=> await Query().Where(u => u.Name == name && u.Password == password).SingleOrDefaultAsync();
 	}

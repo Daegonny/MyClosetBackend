@@ -1,4 +1,5 @@
-﻿using Base.Domain;
+﻿using Auth.Abstractions;
+using Base.Domain;
 using Infra.Abstractions;
 using MyCloset.Services.Abstractions.Seed;
 using NHibernate;
@@ -15,16 +16,28 @@ namespace MyCloset.Services.Seed
 		where Q : IQueryFilter<T>
 		where M : EntityModel<T>
 	{
-		public CrudService(IRepository<T, Q> repository, IContextTools contextTools)
-		{
-			Repository = repository;
-			ContextTools = contextTools;
-		}
 
 		IRepository<T, Q> Repository { get; }
 		IContextTools ContextTools { get; }
+		IUserProvider UserProvider { get; }
 
-		public async Task<IEnumerable<T>> AllAsync() => await Repository.AllAsync();
+		public CrudService
+		(
+			IRepository<T, Q> repository, 
+			IContextTools contextTools, 
+			IUserProvider userProvider
+		)
+		{
+			Repository = repository;
+			ContextTools = contextTools;
+			UserProvider = userProvider;
+		}
+
+		public async Task<IEnumerable<T>> AllAsync()
+		{
+			var user = UserProvider.GetLoggedUser();
+			return await Repository.AllAsync();
+		}
 
 		public async Task<IEnumerable<T>> AllValidAsync() => await Repository.AllValidAsync();
 
