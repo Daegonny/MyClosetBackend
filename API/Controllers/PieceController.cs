@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyCloset.Domain.Entities;
 using MyCloset.Domain.Models;
@@ -14,6 +15,7 @@ namespace API.Controllers
 {
 	[ApiController]
 	[Route("[controller]")]
+	[Authorize]
 	public class PieceController : ControllerBase
 	{
 		public PieceController(IContextTools contextTools, IPieceService pieceService)
