@@ -1,7 +1,7 @@
 ﻿using Base.Domain;
+using Exceptions.Auth;
 using System;
 using System.Text.Json.Serialization;
-using Util.Extensions;
 
 namespace MyCloset.Domain.Entities
 {
@@ -34,6 +34,13 @@ namespace MyCloset.Domain.Entities
 			HashedFilePath = hashedPath;
 			Purchase = purchase;
 			return this;
+		}
+
+		public virtual bool AssertIsOwnedBy(Account account)
+		{
+			if (Account.Id != account.Id)
+				throw new AccessDeniedException();
+			return true;
 		}
 	}
 }

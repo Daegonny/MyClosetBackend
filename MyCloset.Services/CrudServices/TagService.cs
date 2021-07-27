@@ -13,11 +13,11 @@ using Util.Services;
 
 namespace MyCloset.Services.CrudServices
 {
-	public class TagService : CrudService<Tag, ITagQueryFilter, TagModel>, ITagService
+	public class TagService : CrudService<Tag, ITagQueryFilter>, ITagService
 	{
 		ITags Tags { get; }
-		public TagService(ITags tags, IContextTools contextTools, IAccountProvider userProvider) 
-			: base(tags, contextTools, userProvider)
+		public TagService(ITags tags, IContextTools contextTools) 
+			: base(tags, contextTools)
 		{
 			Tags = tags;
 		}

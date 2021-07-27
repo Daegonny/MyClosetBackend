@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using Util.Extensions;
 using System.Linq;
 using NHibernate.Criterion;
-using NHibernate.Transform;
 
 namespace MyCloset.Infra.NH.QueryFilters
 {
