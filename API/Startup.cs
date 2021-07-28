@@ -25,6 +25,7 @@ namespace API
 	public class Startup
 	{
 		public IPathConfig PathConfig { get; set; }
+		public IHashConfig HashConfig { get; set; }
 		public ITokenConfig TokenConfig { get; set; }
 		public string ConnectionString { get; set; }
 		public Startup(IConfiguration configuration)
@@ -41,6 +42,7 @@ namespace API
 				pathSettings.GetSection("DefaultUser").Value, 
 				pathSettings.GetSection("DefaultBase").Value);
 			ConnectionString = configuration.GetSection("ConnectionString").Value;
+			HashConfig = new HashConfig(configuration.GetSection("Salt").Value);
 		}
 
 		public IConfiguration Configuration { get; }
@@ -52,6 +54,7 @@ namespace API
 			services
 				.AddSingleton(PathConfig)
 				.AddSingleton(TokenConfig)
+				.AddSingleton(HashConfig)
 				.AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
 				.AddScoped<IAccountProvider, AccountProvider>()
 				.AddNHibernate(ConnectionString)
