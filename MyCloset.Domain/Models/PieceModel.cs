@@ -25,12 +25,14 @@ namespace MyCloset.Domain.Models
 			return entity;
 		}
 
-		public void FillTags(Dictionary<string, Tag> tagsDictionary) 
+		public PieceModel FillTags(Dictionary<string, Tag> tagsDictionary) 
 		{
 			Tags = new List<Tag>();
 			var tagKeys = TagNames.Select(t => t.Clean());
 			foreach (var tagKey in tagKeys)
 				Tags.Add(tagsDictionary[tagKey]);
+			
+			return this;
 		}
 	}
 }

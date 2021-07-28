@@ -1,4 +1,4 @@
-﻿using Exceptions;
+﻿using Auth.Abstractions;
 using Microsoft.AspNetCore.Http;
 using MyCloset.Domain.Entities;
 using MyCloset.Domain.Models;
@@ -16,76 +16,82 @@ using Util.Services;
 
 namespace MyCloset.Services.CrudServices
 {
-	public class PieceService : CrudService<Piece, IPieceQueryFilter, PieceModel>, IPieceService
+	public class PieceService : CrudService<Piece, IPieceQueryFilter>, IPieceService
 	{
-		IPieces Pieces { get; }
 		IFiles Files { get; }
 		ITagService TagService { get; }
 		IContextTools ContextTools { get; }
+		Account LoggedUser { get; }
 
 		public PieceService
 		(
 			IPieces pieces, 
 			IFiles files,
 			ITagService tagService,
-			IContextTools contextTools
+			IContextTools contextTools,
+			IAccountProvider accountProvider
 		) : base(pieces, contextTools)
 		{
-			Pieces = pieces;
 			Files = files;
 			TagService = tagService;
 			ContextTools = contextTools;
+			LoggedUser = accountProvider.GetLoggedUser();
 		}
 
-		public async Task SaveFromFilesAsync(IFormFileCollection files, string hashedUserPath)
+		public async Task SaveFromFilesAsync(IFormFileCollection files)
 		{
 			var todayDate = ContextTools.Today();
 			foreach (var file in files)
-				await SaveFromFileAsync(hashedUserPath, todayDate, file);
+				await SaveFromFileAsync(todayDate, file);
 		}
 
-		async Task SaveFromFileAsync(string hashedUserPath, DateTime todayDate, IFormFile file)
+		async Task SaveFromFileAsync(DateTime todayDate, IFormFile file)
 		{
 			var fileName = ContextTools.GetFileName(file.FileName);
 			var hashedFileName = (fileName + ContextTools.Now().ToString()).Hash();
 			var extension = ContextTools.GetFileExtension(file.ContentType);
-			Files.Save(new HashableFile(file, hashedFileName, hashedUserPath, extension));
-			var piece = new Piece().Fill(fileName, hashedFileName, extension, hashedUserPath, todayDate);
+			var piece = new Piece().Fill(fileName, hashedFileName, extension, LoggedUser.HashedFilePath, todayDate);
 			await SaveAsync(piece);
-		}
-
-		public new async Task RemoveAsync(long id)
-		{
-			var piece = await ByIdAsync(id);
-			Files.Remove(ContextTools.DefaultBasePath(), piece.HashedFilePath, piece.HashedFileName, piece.Extension);
-			await base.RemoveAsync(piece);
+			Files.Save(new HashableFile(file, hashedFileName, LoggedUser.HashedFilePath, extension));
 		}
 
 		public async Task RemoveAsync(IEnumerable<long> ids)
 		{
 			var pieces = await ByIdsAsync(ids);
+			pieces.Select(p => p.AssertIsOwnedBy(LoggedUser));
 			var piecesToRemoveTasks = new List<Task>();
 			foreach(var piece in pieces)
 			{
 				Files.Remove(ContextTools.DefaultBasePath(), piece.HashedFilePath, piece.HashedFileName, piece.Extension);
-				piecesToRemoveTasks.Add(RemoveAsync(piece));
+				piecesToRemoveTasks.Add(Repository.RemoveAsync(piece));
 			}
 			await Task.WhenAll(piecesToRemoveTasks.ToArray());
 		}
 
-		public override async Task UpdateAsync(PieceModel pieceModel)
+		public async Task UpdateAsync(PieceModel pieceModel)
 		{
+			var piece = await ByIdAsync(pieceModel.Id.Value);
+
+			piece.AssertIsNotNull(pieceModel.Id.Value)
+				 .AssertIsOwnedBy(LoggedUser);
+
 			var savedTags = await TagService.SaveUniqueAsync(pieceModel.TagNames);
 			pieceModel.FillTags(savedTags);
-			await base.UpdateAsync(pieceModel);
+			await UpdateAsync(pieceModel.Update(piece));
 		}
 
-		public override async Task UpdateAsync(IEnumerable<PieceModel> pieceModels)
+		public async Task UpdateAsync(IEnumerable<PieceModel> pieceModels)
 		{
+			//TODO: VALIDAR SE HÁ IDS REPETIDOS
+			var pieces = await ByIdsAsync(pieceModels.Select(m => m.Id.Value));
+			var piecesDictionary = new Dictionary<long, Piece>();
+			foreach (var piece in pieces)
+				if (piece.AssertIsOwnedBy(LoggedUser))
+					piecesDictionary[piece.Id.Value] = piece;
+
 			var savedTags = await TagService.SaveUniqueAsync(pieceModels.SelectMany(p => p.TagNames));
 			foreach (var pieceModel in pieceModels)
-				pieceModel.FillTags(savedTags);
-			await base.UpdateAsync(pieceModels);
+				await UpdateAsync(pieceModel.FillTags(savedTags).Update(piecesDictionary[pieceModel.Id.Value]));
 		}
 	}
 }

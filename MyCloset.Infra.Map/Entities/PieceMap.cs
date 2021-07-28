@@ -14,9 +14,9 @@ namespace MyCloset.Infra.Map.Entities
 			Map(x => x.HashedFilePath).Column("hashed_file_path");
 			Map(x => x.Price);
 			Map(x => x.Purchase);
+			References(x => x.Account).LazyLoad();
 
 			HasManyToMany(x => x.Tags).Table("piece_tag");
-
 		}
 	}
 }

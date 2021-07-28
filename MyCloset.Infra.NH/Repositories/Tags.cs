@@ -1,4 +1,5 @@
-﻿using Infra.NH;
+﻿using Auth.Abstractions;
+using Infra.NH;
 using MyCloset.Domain.Entities;
 using MyCloset.Infra.Abstractions.QueryFilters;
 using MyCloset.Infra.Abstractions.Repositories;
@@ -10,7 +11,8 @@ namespace MyCloset.Infra.NH.Repositories
 {
 	public class Tags : NHRepository<Tag, ITagQueryFilter>, ITags
 	{
-		public Tags(IUnitOfWork unitOfWork, IContextTools contextTools) : base(unitOfWork, contextTools)
+		public Tags(IUnitOfWork unitOfWork, IContextTools contextTools, IAccountProvider accountProvider) 
+			: base(unitOfWork, contextTools, accountProvider)
 		{
 		}
 

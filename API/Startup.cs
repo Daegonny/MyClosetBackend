@@ -1,8 +1,10 @@
-using Base.Settings.Facilities;
+using Auth;
+using Auth.Abstractions;
 using Base.Settings.Filters;
 using Infra.NH.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -14,18 +16,33 @@ using MyCloset.Services.Abstractions.CrudServices;
 using MyCloset.Services.CrudServices;
 using Util.Config;
 using Util.Services;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Http;
 
 namespace API
 {
 	public class Startup
 	{
-		ISettingsModel Settings;
-		IPathConfig PathConfig;
+		public IPathConfig PathConfig { get; set; }
+		public IHashConfig HashConfig { get; set; }
+		public ITokenConfig TokenConfig { get; set; }
+		public string ConnectionString { get; set; }
 		public Startup(IConfiguration configuration)
 		{
-			Configuration = configuration;
-			Settings = SettingsReader.Get();
-			PathConfig = new PathConfig(Settings.DefaultUserPath, Settings.DefaultBasePath);
+			var pathSettings = configuration.GetSection("Path");
+			var tokenSettings = configuration.GetSection("Token");
+			
+			TokenConfig = new TokenConfig(
+				int.Parse(tokenSettings.GetSection("ExpirationTimeInSeconds").Value), 
+				tokenSettings.GetSection("SecretGUID").Value, 
+				tokenSettings.GetSection("Issuer").Value, 
+				tokenSettings.GetSection("Audience").Value);
+			PathConfig = new PathConfig(
+				pathSettings.GetSection("DefaultUser").Value, 
+				pathSettings.GetSection("DefaultBase").Value);
+			ConnectionString = configuration.GetSection("ConnectionString").Value;
+			HashConfig = new HashConfig(configuration.GetSection("Salt").Value);
 		}
 
 		public IConfiguration Configuration { get; }
@@ -35,17 +52,22 @@ namespace API
 		{
 
 			services
-				.AddSingleton(Settings)
 				.AddSingleton(PathConfig)
-				.AddSingleton<IContextTools, ContextTools>()
-				.AddNHibernate(SettingsReader.Get().ConnectionString)
+				.AddSingleton(TokenConfig)
+				.AddSingleton(HashConfig)
+				.AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
+				.AddScoped<IAccountProvider, AccountProvider>()
+				.AddNHibernate(ConnectionString)
 				.AddScoped<NHibernateUnitOfWorkActionFilter>()
 				.AddScoped<IContextTools, ContextTools>()
 				.AddScoped<ITags, Tags>()
 				.AddScoped<IFiles, Files>()
 				.AddScoped<IPieces, Pieces>()
+				.AddScoped<IAccounts, Accounts>()
 				.AddScoped<IPieceService, PieceService>()
 				.AddScoped<ITagService, TagService>()
+				.AddScoped<ITokenService, TokenService>()
+				.AddScoped<IAuthService, AuthService>()
 				.AddControllers(options => {
 					options.Filters.Add(typeof(NHibernateUnitOfWorkActionFilter));
 					options.Filters.Add(typeof(HttpResponseExceptionFilter));
@@ -53,6 +75,44 @@ namespace API
 			services.AddSwaggerGen(c =>
 			{
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
+				var securityScheme = new OpenApiSecurityScheme
+				{
+					Name = "JWT Authentication",
+					Description = "Enter JWT Bearer token **_only_**",
+					In = ParameterLocation.Header,
+					Type = SecuritySchemeType.Http,
+					Scheme = "bearer",
+					BearerFormat = "JWT",
+					Reference = new OpenApiReference
+					{
+						Id = JwtBearerDefaults.AuthenticationScheme,
+						Type = ReferenceType.SecurityScheme
+					}
+				};
+				c.AddSecurityDefinition(securityScheme.Reference.Id, securityScheme);
+				c.AddSecurityRequirement(new OpenApiSecurityRequirement
+				{
+					{securityScheme, new string[] { }}
+				});
+			});
+
+			services.AddAuthentication(a =>
+			{
+				a.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+				a.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+			}).AddJwtBearer(x =>
+			{
+				x.RequireHttpsMetadata = true;
+				x.SaveToken = true;
+				x.TokenValidationParameters = new TokenValidationParameters
+				{
+					ValidateIssuer = true,
+					ValidIssuer = TokenConfig.Issuer,
+					ValidateIssuerSigningKey = true,
+					IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(TokenConfig.SecretGUID)),
+					ValidAudience = TokenConfig.Audience,
+					ValidateAudience = false
+				};
 			});
 		}
 
@@ -78,6 +138,7 @@ namespace API
 					.AllowAnyOrigin();
 			});
 
+			app.UseAuthentication();
 			app.UseAuthorization();
 
 			app.UseEndpoints(endpoints =>

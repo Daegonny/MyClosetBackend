@@ -1,11 +1,11 @@
 ﻿using Base.Domain;
+using Exceptions.Auth;
 using System;
-using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace MyCloset.Domain.Entities
 {
-	public class Piece : TaggeableEntity<Tag>
+	public class Piece : TaggeableEntity<Tag>, IHaveOwner
 	{
 		public Piece(){}
 
@@ -17,9 +17,13 @@ namespace MyCloset.Domain.Entities
 		public virtual string HashedFileName { get; set; }
 		[JsonIgnore]
 		public virtual string HashedFilePath { get; set; }
+		[JsonIgnore]
+		public virtual Account Account { get; set; }
+		[JsonIgnore]
 		public virtual decimal? Price { get; set; }
 		public virtual DateTime Purchase { get; set; }
 		public virtual string FullFilePath {get => $"{HashedFilePath}/{HashedFileName}.{Extension}";}
+
 		//public virtual IEnumerable<Look> Looks { get; set; }
 
 		public virtual Piece Fill(string fileName, string hashedFileName, string extension, string hashedPath, DateTime purchase)
@@ -30,6 +34,13 @@ namespace MyCloset.Domain.Entities
 			HashedFilePath = hashedPath;
 			Purchase = purchase;
 			return this;
+		}
+
+		public virtual bool AssertIsOwnedBy(Account account)
+		{
+			if (Account.Id != account.Id)
+				throw new AccessDeniedException();
+			return true;
 		}
 	}
 }

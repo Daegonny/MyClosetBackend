@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyCloset.Domain.Entities;
 using MyCloset.Domain.Models;
@@ -8,26 +9,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Util.Services;
 
 namespace API.Controllers
 {
 	[ApiController]
 	[Route("[controller]")]
+	[Authorize]
 	public class PieceController : ControllerBase
 	{
-		public PieceController(IContextTools contextTools, IPieceService pieceService)
+		public PieceController(IPieceService pieceService)
 		{
-			ContextTools = contextTools;
 			PieceService = pieceService;
 		}
 
-		IContextTools ContextTools { get; }
 		IPieceService PieceService { get; }
-
-		[HttpGet]
-		public async Task<ActionResult<IEnumerable<Piece>>> All() 
-			=> Ok(await PieceService.AllAsync());
 
 		[HttpGet("Filtered")]
 		public async Task<ActionResult<IEnumerable<Piece>>> Filtered
@@ -68,16 +63,9 @@ namespace API.Controllers
 		[HttpPost("SaveFromFiles")]
 		public async Task<ActionResult<IEnumerable<Piece>>> SaveFromFilesAsync([FromForm] IFormFileCollection files)
 		{
-			await PieceService.SaveFromFilesAsync(files, ContextTools.DefaultUserPath());
+			await PieceService.SaveFromFilesAsync(files);
 			return Ok();
 		} 
-
-		[HttpDelete("{id}")]
-		public async Task<ActionResult> Remove(long id)
-		{
-			await PieceService.RemoveAsync(id);
-			return Ok();
-		}
 
 		[HttpDelete("Multiple")]
 		public async Task<ActionResult> RemoveMultiple([FromBody] long[] ids)
