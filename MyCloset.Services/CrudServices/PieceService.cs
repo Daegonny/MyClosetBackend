@@ -50,7 +50,8 @@ namespace MyCloset.Services.CrudServices
 			var fileName = ContextTools.GetFileName(file.FileName);
 			var hashedFileName = (fileName + ContextTools.Now().ToString()).Hash();
 			var extension = ContextTools.GetFileExtension(file.ContentType);
-			var piece = new Piece().Fill(fileName, hashedFileName, extension, LoggedUser.HashedFilePath, todayDate);
+			var piece = new Piece(LoggedUser)
+				.Fill(fileName, hashedFileName, extension, LoggedUser.HashedFilePath, todayDate);
 			await SaveAsync(piece);
 			Files.Save(new HashableFile(file, hashedFileName, LoggedUser.HashedFilePath, extension));
 		}
