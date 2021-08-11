@@ -9,6 +9,11 @@ namespace MyCloset.Domain.Entities
 	{
 		public Piece(){}
 
+		public Piece(Account account) 
+		{
+			Account = account;
+		}
+
 		[JsonIgnore]
 		public virtual string FileName { get; set; }
 		[JsonIgnore]

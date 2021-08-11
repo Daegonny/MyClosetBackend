@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿
 namespace Util.Config
 {
 	public interface IHashConfig
 	{
-		string Salt { get; }
+		string Secret { get; }
 	}
 	public class HashConfig : IHashConfig
 	{
-		public string Salt { get; }
+		public string Secret { get; }
 
-		public HashConfig(string salt)
+		public HashConfig(string secret)
 		{
-			Salt = salt;
+			Secret = secret;
 		}
 	}
 }
