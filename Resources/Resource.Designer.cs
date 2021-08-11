@@ -70,6 +70,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Peça(s) salva(s)..
+        /// </summary>
+        public static string CreatePieceOk {
+            get {
+                return ResourceManager.GetString("CreatePieceOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Não foi possível encontrar as entidades {0}..
         /// </summary>
         public static string EntityNotFoundMultiple {
@@ -102,6 +111,24 @@ namespace Resources {
         public static string LoginFailed {
             get {
                 return ResourceManager.GetString("LoginFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Peça(s) removidas..
+        /// </summary>
+        public static string RemovePieceOk {
+            get {
+                return ResourceManager.GetString("RemovePieceOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Peça(s) atulizada(s)..
+        /// </summary>
+        public static string UpdatePieceOk {
+            get {
+                return ResourceManager.GetString("UpdatePieceOk", resourceCulture);
             }
         }
     }

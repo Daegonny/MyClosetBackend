@@ -120,6 +120,9 @@
   <data name="AccessDenied" xml:space="preserve">
     <value>Acesso negado.</value>
   </data>
+  <data name="CreatePieceOk" xml:space="preserve">
+    <value>Peça(s) salva(s).</value>
+  </data>
   <data name="EntityNotFoundMultiple" xml:space="preserve">
     <value>Não foi possível encontrar as entidades {0}.</value>
   </data>
@@ -131,5 +134,11 @@
   </data>
   <data name="LoginFailed" xml:space="preserve">
     <value>Email ou senha incorretos.</value>
+  </data>
+  <data name="RemovePieceOk" xml:space="preserve">
+    <value>Peça(s) removidas.</value>
+  </data>
+  <data name="UpdatePieceOk" xml:space="preserve">
+    <value>Peça(s) atulizada(s).</value>
   </data>
 </root>

@@ -5,6 +5,7 @@ using MyCloset.Domain.Entities;
 using MyCloset.Domain.Models;
 using MyCloset.Infra.NH.QueryFilters;
 using MyCloset.Services.Abstractions.CrudServices;
+using Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,28 +65,28 @@ namespace API.Controllers
 		public async Task<ActionResult<IEnumerable<Piece>>> SaveFromFilesAsync([FromForm] IFormFileCollection files)
 		{
 			await PieceService.SaveFromFilesAsync(files);
-			return Ok();
+			return Ok(Resource.CreatePieceOk);
 		} 
 
 		[HttpDelete("Multiple")]
 		public async Task<ActionResult> RemoveMultiple([FromBody] long[] ids)
 		{
 			await PieceService.RemoveAsync(ids.ToList());
-			return Ok(); //TODO: Improve returns
+			return Ok(Resource.RemovePieceOk);
 		}
 
 		[HttpPut]
 		public async Task<ActionResult> Update(PieceModel pieceModel)
 		{
 			await PieceService.UpdateAsync(pieceModel);
-			return Ok();
+			return Ok(Resource.UpdatePieceOk);
 		}
 
 		[HttpPut("Multiple")]
 		public async Task<ActionResult> UpdateMultiple(IEnumerable<PieceModel> pieceModels)
 		{
 			await PieceService.UpdateAsync(pieceModels);
-			return Ok();
+			return Ok(Resource.UpdatePieceOk);
 		}
 	}
 }
