@@ -115,7 +115,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Peça(s) removidas..
+        ///   Looks up a localized string similar to Peça(s) removida(s)..
         /// </summary>
         public static string RemovePieceOk {
             get {

@@ -136,7 +136,7 @@
     <value>Email ou senha incorretos.</value>
   </data>
   <data name="RemovePieceOk" xml:space="preserve">
-    <value>Peça(s) removidas.</value>
+    <value>Peça(s) removida(s).</value>
   </data>
   <data name="UpdatePieceOk" xml:space="preserve">
     <value>Peça(s) atulizada(s).</value>
