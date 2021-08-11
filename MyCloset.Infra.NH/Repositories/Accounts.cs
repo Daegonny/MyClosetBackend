@@ -29,7 +29,7 @@ namespace MyCloset.Infra.NH.Repositories
 		public async Task<Account> Login(string email, string password)
 		{
 			var account = await Query().Where(u => u.Email == email).SingleOrDefaultAsync();
-			if (account.IsNull() || account.Password != $"{password}{account.Creation}{HashConfig.Salt}".Hash())
+			if (account.IsNull() || account.Password != $"{password}{account.Creation}{HashConfig.Secret}".Hash())
 				throw new LoginFailedException();
 			return account;
 		}

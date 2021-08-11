@@ -42,7 +42,7 @@ namespace API
 				pathSettings.GetSection("DefaultUser").Value, 
 				pathSettings.GetSection("DefaultBase").Value);
 			ConnectionString = configuration.GetSection("ConnectionString").Value;
-			HashConfig = new HashConfig(configuration.GetSection("Salt").Value);
+			HashConfig = new HashConfig(configuration.GetSection("Secret").Value);
 		}
 
 		public IConfiguration Configuration { get; }
