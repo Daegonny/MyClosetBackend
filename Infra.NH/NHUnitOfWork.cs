@@ -41,8 +41,6 @@ namespace Infra.NH
 
 		private IUnitOfWork DoBegin()
 		{
-			CheckIsDisposed();
-
 			if (Begun) return this;
 
 			Transaction?.Dispose();
@@ -120,6 +118,8 @@ namespace Infra.NH
 
 				if (Session != null)
 					Session.Dispose();
+
+				Session = null;
 
 				Disposed = true;
 			}
