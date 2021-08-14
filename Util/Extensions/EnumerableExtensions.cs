@@ -20,6 +20,9 @@ namespace Util.Extensions
 		public static bool IsNullOrEmpty<T>(this IEnumerable<T> enumerable)
 			=> enumerable == null || enumerable.Count() == 0;
 
+		public static bool IsPlural<T>(this IEnumerable<T> enumerable)
+			=> enumerable.Count() > 1;
+
 		public static Dictionary<K, T> Merge<K, T>(this Dictionary<K, T> baseDictionary,
 			IEnumerable<T> newElements, Func<T, K> acessor)
 		{
