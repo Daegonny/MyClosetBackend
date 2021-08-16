@@ -70,7 +70,16 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Peça(s) salva(s)..
+        ///   Looks up a localized string similar to {0 } Peças salvas..
+        /// </summary>
+        public static string CreateMultiplePieceOk {
+            get {
+                return ResourceManager.GetString("CreateMultiplePieceOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Peça salva..
         /// </summary>
         public static string CreatePieceOk {
             get {
@@ -115,7 +124,16 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Peça(s) removida(s)..
+        ///   Looks up a localized string similar to {0} Peças removidas..
+        /// </summary>
+        public static string RemoveMultiplePieceOk {
+            get {
+                return ResourceManager.GetString("RemoveMultiplePieceOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Peça removida..
         /// </summary>
         public static string RemovePieceOk {
             get {
@@ -124,7 +142,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Peça(s) atulizada(s)..
+        ///   Looks up a localized string similar to Peça atulizada..
         /// </summary>
         public static string UpdatePieceOk {
             get {
