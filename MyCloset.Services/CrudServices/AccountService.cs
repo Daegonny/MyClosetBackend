@@ -18,18 +18,21 @@ namespace MyCloset.Services.CrudServices
 	{
 		IAccounts Accounts { get; }
 		IHashConfig HashConfig { get; }
+		IFiles Files { get; }
 		IContextTools ContextTools { get; }
 
 		public AccountService
 		(
 			IAccounts accounts,
 			IHashConfig hashConfig,
+			IFiles files,
 			IContextTools contextTools
 		) 
 			: base(accounts, contextTools)
 		{
 			Accounts = accounts;
 			HashConfig = hashConfig;
+			Files = files;
 			ContextTools = contextTools;
 		}
 
@@ -39,7 +42,7 @@ namespace MyCloset.Services.CrudServices
 			await Validate(model);
 
 			var account = model.ToEntity(ContextTools.Now(), HashConfig.Secret);
-			//TODO: CREATE FOLDER ON FILE SYSTEM
+			Files.CreateDirectory(ContextTools.DefaultBasePath(), account.HashedFilePath);
 			await SaveAsync(account);
 		}
 

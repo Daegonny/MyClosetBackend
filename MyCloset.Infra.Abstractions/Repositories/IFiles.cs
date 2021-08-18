@@ -10,5 +10,6 @@ namespace MyCloset.Infra.Abstractions.Repositories
 		IEnumerable<string> Save(IEnumerable<HashableFile> hashableFiles);
 		void Remove(string basePath, string path, string file, string extension);
 		byte[] Read(string basePath, string path, string name);
+		void CreateDirectory(string basePath, string path);
 	}
 }
