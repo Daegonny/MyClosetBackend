@@ -129,6 +129,9 @@
   <data name="CreatePieceOk" xml:space="preserve">
     <value>Peça salva.</value>
   </data>
+  <data name="EmailNotEqualsConfirmation" xml:space="preserve">
+    <value>Email e email de confirmação são diferentes.</value>
+  </data>
   <data name="EntityNotFoundMultiple" xml:space="preserve">
     <value>Não foi possível encontrar as entidades {0}.</value>
   </data>
@@ -140,6 +143,9 @@
   </data>
   <data name="LoginFailed" xml:space="preserve">
     <value>Email ou senha incorretos.</value>
+  </data>
+  <data name="PasswordNotEqualsConfirmation" xml:space="preserve">
+    <value>Senha e senha de confirmação são diferentes.</value>
   </data>
   <data name="RemoveMultiplePieceOk" xml:space="preserve">
     <value>{0} Peças removidas.</value>

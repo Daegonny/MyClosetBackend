@@ -97,6 +97,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email e email de confirmação são diferentes..
+        /// </summary>
+        public static string EmailNotEqualsConfirmation {
+            get {
+                return ResourceManager.GetString("EmailNotEqualsConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Não foi possível encontrar as entidades {0}..
         /// </summary>
         public static string EntityNotFoundMultiple {
@@ -129,6 +138,15 @@ namespace Resources {
         public static string LoginFailed {
             get {
                 return ResourceManager.GetString("LoginFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Senha e senha de confirmação são diferentes..
+        /// </summary>
+        public static string PasswordNotEqualsConfirmation {
+            get {
+                return ResourceManager.GetString("PasswordNotEqualsConfirmation", resourceCulture);
             }
         }
         

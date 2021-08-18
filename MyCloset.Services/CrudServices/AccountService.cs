@@ -1,10 +1,12 @@
 ﻿using Exceptions.Auth;
+using Exceptions.BadRequest;
 using MyCloset.Domain.Entities;
 using MyCloset.Domain.Models;
 using MyCloset.Infra.Abstractions.QueryFilters;
 using MyCloset.Infra.Abstractions.Repositories;
 using MyCloset.Services.Abstractions.CrudServices;
 using MyCloset.Services.Seed;
+using Resources;
 using System.Threading.Tasks;
 using Util.Config;
 using Util.Extensions;
@@ -53,10 +55,10 @@ namespace MyCloset.Services.CrudServices
 				throw new AccountAlreadyExistsException();
 
 			if (model.Email != model.EmailConfirm)
-				throw new AccountAlreadyExistsException(); //TODO: Mudar tipo de exceção
+				throw new BadRequestException(Resource.EmailNotEqualsConfirmation);
 
 			if (model.Password != model.PasswordConfirm)
-				throw new AccountAlreadyExistsException(); //TODO: Mudar tipo de exceção
+				throw new BadRequestException(Resource.PasswordNotEqualsConfirmation);
 
 			//TODO: validar secretCode
 		}
