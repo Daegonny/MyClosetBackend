@@ -65,6 +65,7 @@ namespace API
 				.AddScoped<IPieces, Pieces>()
 				.AddScoped<IAccounts, Accounts>()
 				.AddScoped<IPieceService, PieceService>()
+				.AddScoped<IAccountService, AccountService>()
 				.AddScoped<ITagService, TagService>()
 				.AddScoped<ITokenService, TokenService>()
 				.AddScoped<IAuthService, AuthService>()

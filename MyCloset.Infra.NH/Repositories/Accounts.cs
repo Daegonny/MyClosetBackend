@@ -25,7 +25,6 @@ namespace MyCloset.Infra.NH.Repositories
 			HashConfig = hashConfig;
 		}
 
-
 		public async Task<Account> Login(string email, string password)
 		{
 			var account = await Query().Where(u => u.Email == email).SingleOrDefaultAsync();

@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Security.Claims;
+using System.Text.Json.Serialization;
 
 namespace MyCloset.Domain.Entities
 {
@@ -9,7 +10,9 @@ namespace MyCloset.Domain.Entities
 	{
 		public virtual string Email {get; set;}
 		public virtual string Password { get; set; }
+		[JsonIgnore]
 		public virtual string HashedFilePath { get; set; }
+		[JsonIgnore]
 		public virtual string Token { get; protected set; }
 		public virtual Account AddToken(string token)
 		{

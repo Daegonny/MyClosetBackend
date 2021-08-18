@@ -11,7 +11,5 @@ namespace MyCloset.Domain.Models
 			entity.Name = Name;
 			return entity;
 		}
-
-		public Tag ToEntity() => new Tag(Id, Name.Clean());
 	}
 }

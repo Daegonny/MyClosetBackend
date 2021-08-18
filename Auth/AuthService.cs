@@ -7,15 +7,15 @@ namespace Auth
 	public class AuthService : IAuthService
 	{
 		ITokenService TokenService { get; }
-		IAccounts Users { get; }
+		IAccounts Accounts { get; }
 
-		public AuthService(ITokenService tokenService, IAccounts users)
+		public AuthService(ITokenService tokenService, IAccounts accounts)
 		{
 			TokenService = tokenService;
-			Users = users;
+			Accounts = accounts;
 		}
 
 		public async Task<string> Login(string email, string password) 
-			=> TokenService.AddTokenTo(await Users.Login(email, password)).Token;
+			=> TokenService.AddTokenTo(await Accounts.Login(email, password)).Token;
 	}
 }
