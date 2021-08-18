@@ -120,6 +120,9 @@
   <data name="AccessDenied" xml:space="preserve">
     <value>Acesso negado.</value>
   </data>
+  <data name="AccountAlreadyExists" xml:space="preserve">
+    <value>Email pertence a uma conta já existente.</value>
+  </data>
   <data name="CreateMultiplePieceOk" xml:space="preserve">
     <value>{0 } Peças salvas.</value>
   </data>

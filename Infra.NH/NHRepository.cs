@@ -6,6 +6,7 @@ using NHibernate;
 using NHibernate.Criterion;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Util.Extensions;
 using Util.Services;
 
 namespace Infra.NH
@@ -50,7 +51,9 @@ namespace Infra.NH
 
 		public async Task<T> SaveAsync(T entity)
 		{
-			entity.Creation = ContextTools.Now();
+			if (entity.Creation.IsNull())
+				entity.Creation = ContextTools.Now();
+			
 			entity.Id = (long)await UnitOfWork.Session.SaveAsync(entity);
 			return entity;
 		} 

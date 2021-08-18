@@ -1,6 +1,7 @@
 ﻿using Base.Domain;
 using MyCloset.Domain.Entities;
 using System;
+using Util.Extensions;
 
 namespace MyCloset.Domain.Models
 {
@@ -15,6 +16,18 @@ namespace MyCloset.Domain.Models
 		public override Account Update(Account entity)
 		{
 			throw new NotImplementedException();
+		}
+
+		public Account ToEntity(DateTime creation, string secret)
+		{
+			return new Account()
+			{
+				Name = Name,
+				Email = Email,
+				Creation = creation,
+				Password = Password.Encrypt(creation, secret),
+				HashedFilePath = Email.Encrypt(creation, secret)
+			};
 		}
 	}
 }

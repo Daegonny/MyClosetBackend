@@ -83,6 +83,9 @@ namespace Util.Extensions
 			return sBuilder.ToString();
 		}
 
+		public static string Encrypt(this string input, DateTime? salt, string secret) 
+			=> $"{input}{(salt.HasValue ? salt.ToString() : string.Empty)}{secret}".Hash();
+
 		public static decimal? ToDecimal(this string input)
 		{
 			if (input.IsNullOrEmpty())

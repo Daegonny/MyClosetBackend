@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Util.Config;
 using Util.Extensions;
 using Util.Services;
 
@@ -21,6 +22,7 @@ namespace MyCloset.Services.CrudServices
 		IFiles Files { get; }
 		ITagService TagService { get; }
 		IContextTools ContextTools { get; }
+		IHashConfig HashConfig { get; }
 		Account LoggedUser { get; }
 
 		public PieceService
@@ -29,12 +31,14 @@ namespace MyCloset.Services.CrudServices
 			IFiles files,
 			ITagService tagService,
 			IContextTools contextTools,
+			IHashConfig hashConfig,
 			IAccountProvider accountProvider
 		) : base(pieces, contextTools)
 		{
 			Files = files;
 			TagService = tagService;
 			ContextTools = contextTools;
+			HashConfig = hashConfig;
 			LoggedUser = accountProvider.GetLoggedUser();
 		}
 
@@ -48,7 +52,7 @@ namespace MyCloset.Services.CrudServices
 		async Task SaveFromFileAsync(DateTime todayDate, IFormFile file)
 		{
 			var fileName = ContextTools.GetFileName(file.FileName);
-			var hashedFileName = (fileName + ContextTools.Now().ToString()).Hash();
+			var hashedFileName = fileName.Encrypt(ContextTools.Now(), HashConfig.Secret);
 			var extension = ContextTools.GetFileExtension(file.ContentType);
 			var piece = new Piece(LoggedUser)
 				.Fill(fileName, hashedFileName, extension, LoggedUser.HashedFilePath, todayDate);

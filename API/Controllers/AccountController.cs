@@ -24,7 +24,6 @@ namespace API.Controllers
 			return Ok(); //TODO: Adicionar retorno de sucesso
 		}
 
-
 		[HttpPut]
 		[Authorize]
 		public async Task<ActionResult<string>> Update(AccountModel model)

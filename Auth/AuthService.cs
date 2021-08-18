@@ -1,21 +1,31 @@
 ﻿using Auth.Abstractions;
+using Exceptions.Auth;
 using MyCloset.Infra.Abstractions.Repositories;
 using System.Threading.Tasks;
+using Util.Config;
+using Util.Extensions;
 
 namespace Auth
 {
 	public class AuthService : IAuthService
 	{
 		ITokenService TokenService { get; }
+		IHashConfig HashConfig { get; }
 		IAccounts Accounts { get; }
 
-		public AuthService(ITokenService tokenService, IAccounts accounts)
+		public AuthService(ITokenService tokenService, IHashConfig hashConfig, IAccounts accounts)
 		{
 			TokenService = tokenService;
+			HashConfig = hashConfig;
 			Accounts = accounts;
 		}
 
-		public async Task<string> Login(string email, string password) 
-			=> TokenService.AddTokenTo(await Accounts.Login(email, password)).Token;
+		public async Task<string> Login(string email, string password)
+		{
+			var account = await Accounts.ByEmail(email);
+			if (account.IsNull() || account.Password != password.Encrypt(account.Creation, HashConfig.Secret))
+				throw new LoginFailedException();
+			return TokenService.AddTokenTo(account).Token;
+		} 
 	}
 }
