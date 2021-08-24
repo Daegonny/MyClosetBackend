@@ -22,7 +22,7 @@ namespace Auth
 
 		public async Task<string> Login(string email, string password)
 		{
-			var account = await Accounts.ByEmail(email);
+			var account = await Accounts.ByEmailAsync(email);
 			if (account.IsNull() || account.Password != password.Encrypt(account.Creation, HashConfig.Secret))
 				throw new LoginFailedException();
 			return TokenService.AddTokenTo(account).Token;

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MyCloset.Domain.Models;
 using MyCloset.Services.Abstractions.CrudServices;
+using Resources;
 using System.Threading.Tasks;
 
 namespace API.Controllers
@@ -21,15 +22,16 @@ namespace API.Controllers
 		public async Task<ActionResult<string>> Save(AccountModel model)
 		{
 			await AccountService.SaveAsync(model);
-			return Ok(); //TODO: Adicionar retorno de sucesso
+			return Ok(Resource.CreateAccountOk);
 		}
 
 		[HttpPut]
 		[Authorize]
 		public async Task<ActionResult<string>> Update(AccountModel model)
 		{
-			await AccountService.UpdateAsync(model);
-			return Ok(); //TODO: Adicionar retorno de sucesso
+			var token = await AccountService.UpdateAsync(model);
+			var response = new SimpleResponse(token, Resource.UpdateAccountOk);
+			return Ok(response);
 		}
 	}
 }

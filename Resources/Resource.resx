@@ -123,6 +123,9 @@
   <data name="AccountAlreadyExists" xml:space="preserve">
     <value>Email pertence a uma conta já existente.</value>
   </data>
+  <data name="CreateAccountOk" xml:space="preserve">
+    <value>Perfil cadastrado.</value>
+  </data>
   <data name="CreateMultiplePieceOk" xml:space="preserve">
     <value>{0 } Peças salvas.</value>
   </data>
@@ -152,6 +155,9 @@
   </data>
   <data name="RemovePieceOk" xml:space="preserve">
     <value>Peça removida.</value>
+  </data>
+  <data name="UpdateAccountOk" xml:space="preserve">
+    <value>Perfil atualizado.</value>
   </data>
   <data name="UpdatePieceOk" xml:space="preserve">
     <value>Peça atulizada.</value>

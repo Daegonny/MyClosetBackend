@@ -7,6 +7,6 @@ namespace MyCloset.Infra.Abstractions.Repositories
 {
 	public interface IAccounts : IRepository<Account, IAccountQueryFilter>
 	{
-		Task<Account> ByEmail(string email);
+		Task<Account> ByEmailAsync(string email);
 	}
 }

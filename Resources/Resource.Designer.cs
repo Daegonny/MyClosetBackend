@@ -79,6 +79,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Perfil cadastrado..
+        /// </summary>
+        public static string CreateAccountOk {
+            get {
+                return ResourceManager.GetString("CreateAccountOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0 } Peças salvas..
         /// </summary>
         public static string CreateMultiplePieceOk {
@@ -165,6 +174,15 @@ namespace Resources {
         public static string RemovePieceOk {
             get {
                 return ResourceManager.GetString("RemovePieceOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Perfil atualizado..
+        /// </summary>
+        public static string UpdateAccountOk {
+            get {
+                return ResourceManager.GetString("UpdateAccountOk", resourceCulture);
             }
         }
         

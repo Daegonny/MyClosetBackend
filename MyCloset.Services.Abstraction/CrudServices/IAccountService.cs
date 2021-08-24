@@ -9,6 +9,6 @@ namespace MyCloset.Services.Abstractions.CrudServices
 	public interface IAccountService : ICrudService<Account, IAccountQueryFilter>
 	{
 		Task SaveAsync(AccountModel model);
-		Task UpdateAsync(AccountModel model);
+		Task<string> UpdateAsync(AccountModel model);
 	}
 }

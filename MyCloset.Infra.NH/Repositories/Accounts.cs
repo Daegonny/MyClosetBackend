@@ -19,7 +19,7 @@ namespace MyCloset.Infra.NH.Repositories
 		{
 		}
 
-		public async Task<Account> ByEmail(string email) 
+		public async Task<Account> ByEmailAsync(string email) 
 			=> await Query().Where(u => u.Email == email).SingleOrDefaultAsync();
 	}
 }
