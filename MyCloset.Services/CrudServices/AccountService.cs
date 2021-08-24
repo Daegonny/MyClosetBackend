@@ -1,4 +1,5 @@
-﻿using Exceptions.Auth;
+﻿using Auth.Abstractions;
+using Exceptions.Auth;
 using Exceptions.BadRequest;
 using MyCloset.Domain.Entities;
 using MyCloset.Domain.Models;
@@ -19,6 +20,8 @@ namespace MyCloset.Services.CrudServices
 		IAccounts Accounts { get; }
 		IHashConfig HashConfig { get; }
 		IFiles Files { get; }
+		IAccountProvider AccountProvider { get; }
+		ITokenService TokenService { get; }
 		IContextTools ContextTools { get; }
 
 		public AccountService
@@ -26,6 +29,8 @@ namespace MyCloset.Services.CrudServices
 			IAccounts accounts,
 			IHashConfig hashConfig,
 			IFiles files,
+			IAccountProvider accountProvider,
+			ITokenService tokenService,
 			IContextTools contextTools
 		) 
 			: base(accounts, contextTools)
@@ -33,37 +38,60 @@ namespace MyCloset.Services.CrudServices
 			Accounts = accounts;
 			HashConfig = hashConfig;
 			Files = files;
+			AccountProvider = accountProvider;
+			TokenService = tokenService;
 			ContextTools = contextTools;
 		}
 
 
 		public async Task SaveAsync(AccountModel model)
 		{
-			await Validate(model);
+			await ValidateOnSave(model);
 
 			var account = model.ToEntity(ContextTools.Now(), HashConfig.Secret);
 			Files.CreateDirectory(ContextTools.DefaultBasePath(), account.HashedFilePath);
 			await SaveAsync(account);
 		}
 
-		public Task UpdateAsync(AccountModel model)
+		public async Task<string> UpdateAsync(AccountModel model)
 		{
-			return Task.Delay(5);
+			var account = await ByIdAsync(AccountProvider.GetLoggedUser().Id.Value);
+			await ValidateOnUpdate(model, account);
+			model.Update(account, HashConfig.Secret);
+			await UpdateAsync(account);
+			return TokenService.AddTokenTo(account).Token;
 		}
 
-		async Task Validate(AccountModel model)
+		async Task ValidateOnUpdate (AccountModel model, Account account)
 		{
-			var account = await Accounts.ByEmail(model.Email);
-			if (account.NotNull())
-				throw new AccountAlreadyExistsException();
+			ValidateModel(model);
+			if (model.Email != account.Email)
+				if (await AccountExists(model.Email))
+					throw new AccountAlreadyExistsException();
+		}
 
+		async Task ValidateOnSave(AccountModel model)
+		{
+			ValidateModel(model);
+
+			if (await AccountExists(model.Email))
+				throw new AccountAlreadyExistsException();
+			
+			//TODO: validar secretCode
+		}
+
+		void ValidateModel(AccountModel model)
+		{
 			if (model.Email != model.EmailConfirm)
 				throw new BadRequestException(Resource.EmailNotEqualsConfirmation);
 
 			if (model.Password != model.PasswordConfirm)
 				throw new BadRequestException(Resource.PasswordNotEqualsConfirmation);
+		}
 
-			//TODO: validar secretCode
+		public async Task<bool> AccountExists(string email)
+		{
+			return (await Accounts.ByEmailAsync(email)).NotNull();
 		}
 	}
 }

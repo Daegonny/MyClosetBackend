@@ -6,7 +6,7 @@ namespace MyCloset.Domain.Models
 {
 	public class TagModel : EntityModel<Tag>
 	{
-		public override Tag Update(Tag entity)
+		public Tag Update(Tag entity)
 		{
 			entity.Name = Name;
 			return entity;
