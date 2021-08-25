@@ -106,6 +106,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email.
+        /// </summary>
+        public static string EmailField {
+            get {
+                return ResourceManager.GetString("EmailField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email e email de confirmação são diferentes..
         /// </summary>
         public static string EmailNotEqualsConfirmation {
@@ -147,6 +156,33 @@ namespace Resources {
         public static string LoginFailed {
             get {
                 return ResourceManager.GetString("LoginFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} deve ser maior que {1}..
+        /// </summary>
+        public static string MinLengthError {
+            get {
+                return ResourceManager.GetString("MinLengthError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nome.
+        /// </summary>
+        public static string NameField {
+            get {
+                return ResourceManager.GetString("NameField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Senha.
+        /// </summary>
+        public static string PasswordField {
+            get {
+                return ResourceManager.GetString("PasswordField", resourceCulture);
             }
         }
         

@@ -1,5 +1,7 @@
 ﻿using Base.Domain;
+using Exceptions.BadRequest;
 using MyCloset.Domain.Entities;
+using Resources;
 using System;
 using Util.Extensions;
 
@@ -31,6 +33,24 @@ namespace MyCloset.Domain.Models
 				Password = Password.Encrypt(creation, secret),
 				HashedFilePath = Email.Encrypt(creation, secret)
 			};
+		}
+
+		public void Validate()
+		{
+			if (Name.Length < 2)
+				throw new BadRequestException(string.Format(Resource.MinLengthError, Resource.NameField, 2));
+
+			if (Email.Length < 4)
+				throw new BadRequestException(string.Format(Resource.MinLengthError, Resource.EmailField, 4));
+
+			if (Password.Length < 6)
+				throw new BadRequestException(string.Format(Resource.MinLengthError, Resource.PasswordField, 6));
+
+			if (Email != EmailConfirm)
+				throw new BadRequestException(Resource.EmailNotEqualsConfirmation);
+
+			if (Password != PasswordConfirm)
+				throw new BadRequestException(Resource.PasswordNotEqualsConfirmation);
 		}
 	}
 }

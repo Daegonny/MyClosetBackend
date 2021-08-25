@@ -1,13 +1,11 @@
 ﻿using Auth.Abstractions;
 using Exceptions.Auth;
-using Exceptions.BadRequest;
 using MyCloset.Domain.Entities;
 using MyCloset.Domain.Models;
 using MyCloset.Infra.Abstractions.QueryFilters;
 using MyCloset.Infra.Abstractions.Repositories;
 using MyCloset.Services.Abstractions.CrudServices;
 using MyCloset.Services.Seed;
-using Resources;
 using System.Threading.Tasks;
 using Util.Config;
 using Util.Extensions;
@@ -43,7 +41,6 @@ namespace MyCloset.Services.CrudServices
 			ContextTools = contextTools;
 		}
 
-
 		public async Task SaveAsync(AccountModel model)
 		{
 			await ValidateOnSave(model);
@@ -64,7 +61,7 @@ namespace MyCloset.Services.CrudServices
 
 		async Task ValidateOnUpdate (AccountModel model, Account account)
 		{
-			ValidateModel(model);
+			model.Validate();
 			if (model.Email != account.Email)
 				if (await AccountExists(model.Email))
 					throw new AccountAlreadyExistsException();
@@ -72,7 +69,7 @@ namespace MyCloset.Services.CrudServices
 
 		async Task ValidateOnSave(AccountModel model)
 		{
-			ValidateModel(model);
+			model.Validate();
 
 			if (await AccountExists(model.Email))
 				throw new AccountAlreadyExistsException();
@@ -80,18 +77,7 @@ namespace MyCloset.Services.CrudServices
 			//TODO: validar secretCode
 		}
 
-		void ValidateModel(AccountModel model)
-		{
-			if (model.Email != model.EmailConfirm)
-				throw new BadRequestException(Resource.EmailNotEqualsConfirmation);
-
-			if (model.Password != model.PasswordConfirm)
-				throw new BadRequestException(Resource.PasswordNotEqualsConfirmation);
-		}
-
-		public async Task<bool> AccountExists(string email)
-		{
-			return (await Accounts.ByEmailAsync(email)).NotNull();
-		}
+		public async Task<bool> AccountExists(string email) 
+			=> (await Accounts.ByEmailAsync(email)).NotNull();
 	}
 }
