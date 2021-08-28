@@ -1,7 +1,6 @@
 ﻿using Auth.Abstractions;
 using Infra.NH;
 using MyCloset.Domain.Entities;
-using MyCloset.Infra.Abstractions.QueryFilters;
 using MyCloset.Infra.Abstractions.Repositories;
 using System.Threading.Tasks;
 using Util.Services;

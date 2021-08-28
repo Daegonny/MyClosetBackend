@@ -1,6 +1,5 @@
 ﻿using MyCloset.Domain.Entities;
 using MyCloset.Domain.Models;
-using MyCloset.Infra.Abstractions.QueryFilters;
 using MyCloset.Services.Abstractions.Seed;
 using System.Threading.Tasks;
 

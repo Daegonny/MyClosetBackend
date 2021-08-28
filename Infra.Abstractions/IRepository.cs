@@ -1,6 +1,5 @@
 ﻿
 using Base.Domain;
-using NHibernate;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

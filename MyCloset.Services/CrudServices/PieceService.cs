@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using MyCloset.Domain.Entities;
 using MyCloset.Domain.Models;
-using MyCloset.Infra.Abstractions.QueryFilters;
+using MyCloset.Domain.QueryFilters;
 using MyCloset.Infra.Abstractions.Repositories;
 using MyCloset.Infra.File;
 using MyCloset.Services.Abstractions.CrudServices;
@@ -101,10 +101,10 @@ namespace MyCloset.Services.CrudServices
 				await UpdateAsync(pieceModel.FillTags(savedTags).Update(piecesDictionary[pieceModel.Id.Value]));
 		}
 
-		public async Task<IEnumerable<Piece>> FilteredAsync(IPieceQueryFilter queryFilter, int start, int quantity)
+		public async Task<IEnumerable<Piece>> FilteredAsync(PieceQueryFilter queryFilter, int start, int quantity)
 			=> await Pieces.FilteredAsync(queryFilter, start, quantity);
 
-		public async Task<int> FilteredRowCountAsync(IPieceQueryFilter queryFilter)
+		public async Task<int> FilteredRowCountAsync(PieceQueryFilter queryFilter)
 			=> await Pieces.FilteredRowCountAsync(queryFilter);
 
 	}
