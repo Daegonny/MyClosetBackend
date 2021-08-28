@@ -15,10 +15,15 @@ namespace MyCloset.Infra.NH.Repositories
 	public class Pieces : NHRepository<Piece>, IPieces
 	{
 		PieceFilterResolver FilterResolver { get; }
-		public Pieces(IUnitOfWork unitOfWork, IContextTools contextTools, IAccountProvider accountProvider) 
-			: base(unitOfWork, contextTools, accountProvider)
+		public Pieces
+		(
+			IUnitOfWork unitOfWork, 
+			IContextTools contextTools, 
+			IAccountProvider accountProvider, 
+			PieceFilterResolver pieceFilterResolver
+		) : base(unitOfWork, contextTools, accountProvider)
 		{
-			FilterResolver = new PieceFilterResolver();
+			FilterResolver = pieceFilterResolver;
 		}
 
 		public async Task<IEnumerable<Piece>> FilteredAsync(PieceQueryFilter filter, int start, int quantity)

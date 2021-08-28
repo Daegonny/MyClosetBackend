@@ -19,6 +19,7 @@ using Util.Services;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Http;
+using MyCloset.Infra.NH.FilterResolvers;
 
 namespace API
 {
@@ -69,6 +70,7 @@ namespace API
 				.AddScoped<ITagService, TagService>()
 				.AddScoped<ITokenService, TokenService>()
 				.AddScoped<IAuthService, AuthService>()
+				.AddScoped<PieceFilterResolver>()
 				.AddControllers(options => {
 					options.Filters.Add(typeof(NHibernateUnitOfWorkActionFilter));
 					options.Filters.Add(typeof(HttpResponseExceptionFilter));

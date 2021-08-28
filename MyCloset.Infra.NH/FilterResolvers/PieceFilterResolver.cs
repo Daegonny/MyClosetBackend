@@ -7,7 +7,7 @@ using Util.Extensions;
 
 namespace MyCloset.Infra.NH.FilterResolvers
 {
-	class PieceFilterResolver
+	public class PieceFilterResolver
 	{
 
 		Tag tagAlias = null;
