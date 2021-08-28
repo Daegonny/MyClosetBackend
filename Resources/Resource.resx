@@ -168,6 +168,15 @@
   <data name="RemovePieceOk" xml:space="preserve">
     <value>Peça removida.</value>
   </data>
+  <data name="SecredCodeNotFound" xml:space="preserve">
+    <value>Código não encontrado.</value>
+  </data>
+  <data name="SecretCodeExpired" xml:space="preserve">
+    <value>Código expirado.</value>
+  </data>
+  <data name="SecretCodeUnavailable" xml:space="preserve">
+    <value>Código já foi usado.</value>
+  </data>
   <data name="UpdateAccountOk" xml:space="preserve">
     <value>Perfil atualizado.</value>
   </data>

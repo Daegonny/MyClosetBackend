@@ -214,6 +214,33 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Código não encontrado..
+        /// </summary>
+        public static string SecredCodeNotFound {
+            get {
+                return ResourceManager.GetString("SecredCodeNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Código expirado..
+        /// </summary>
+        public static string SecretCodeExpired {
+            get {
+                return ResourceManager.GetString("SecretCodeExpired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Código já foi usado..
+        /// </summary>
+        public static string SecretCodeUnavailable {
+            get {
+                return ResourceManager.GetString("SecretCodeUnavailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Perfil atualizado..
         /// </summary>
         public static string UpdateAccountOk {

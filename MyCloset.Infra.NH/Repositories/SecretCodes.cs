@@ -2,6 +2,7 @@
 using Infra.NH;
 using MyCloset.Domain.Entities;
 using MyCloset.Infra.Abstractions.Repositories;
+using System.Threading.Tasks;
 using Util.Services;
 
 namespace MyCloset.Infra.NH.Repositories
@@ -12,5 +13,8 @@ namespace MyCloset.Infra.NH.Repositories
 			: base(unitOfWork, contextTools, accountProvider)
 		{
 		}
+
+		public async Task<SecretCode> ByNameAsync(string name)
+			=> await Query().Where(s => s.Name == name).SingleOrDefaultAsync();
 	}
 }

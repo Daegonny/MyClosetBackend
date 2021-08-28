@@ -2,6 +2,7 @@
 using Exceptions.Auth;
 using MyCloset.Domain.Enums;
 using System;
+using Util.Extensions;
 
 namespace MyCloset.Domain.Entities
 {
@@ -20,10 +21,10 @@ namespace MyCloset.Domain.Entities
 			return true;
 		}
 
-		bool IsExpired(DateTime today) 
+		public virtual bool IsExpired(DateTime today) 
 			=> today > Expiration;
 
-		public virtual bool IsNotExpired(DateTime today) 
-			=> !IsExpired(today);
+		public virtual bool IsConsumed()
+			=> Activation.NotNull();
 	}
 }
