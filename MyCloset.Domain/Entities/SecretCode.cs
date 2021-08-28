@@ -20,5 +20,11 @@ namespace MyCloset.Domain.Entities
 				throw new AccessDeniedException();
 			return true;
 		}
+
+		bool IsExpired(DateTime today) 
+			=> today > Expiration;
+
+		public bool IsNotExpired(DateTime today) 
+			=> !IsExpired(today);
 	}
 }
