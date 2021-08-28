@@ -13,7 +13,7 @@ using Util.Services;
 
 namespace MyCloset.Services.CrudServices
 {
-	public class AccountService : CrudService<Account, IAccountQueryFilter>, IAccountService
+	public class AccountService : CrudService<Account>, IAccountService
 	{
 		IAccounts Accounts { get; }
 		IHashConfig HashConfig { get; }

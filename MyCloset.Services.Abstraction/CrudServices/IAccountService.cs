@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyCloset.Services.Abstractions.CrudServices
 {
-	public interface IAccountService : ICrudService<Account, IAccountQueryFilter>
+	public interface IAccountService : ICrudService<Account>
 	{
 		Task SaveAsync(AccountModel model);
 		Task<string> UpdateAsync(AccountModel model);

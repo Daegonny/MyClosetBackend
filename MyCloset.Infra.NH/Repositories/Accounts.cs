@@ -8,7 +8,7 @@ using Util.Services;
 
 namespace MyCloset.Infra.NH.Repositories
 {
-	public class Accounts : NHRepository<Account, IAccountQueryFilter>, IAccounts
+	public class Accounts : NHRepository<Account>, IAccounts
 	{
 		public Accounts
 		(

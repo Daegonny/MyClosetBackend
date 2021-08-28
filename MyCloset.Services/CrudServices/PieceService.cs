@@ -17,8 +17,9 @@ using Util.Services;
 
 namespace MyCloset.Services.CrudServices
 {
-	public class PieceService : CrudService<Piece, IPieceQueryFilter>, IPieceService
+	public class PieceService : CrudService<Piece>, IPieceService
 	{
+		IPieces Pieces { get; }
 		IFiles Files { get; }
 		ITagService TagService { get; }
 		IContextTools ContextTools { get; }
@@ -35,6 +36,7 @@ namespace MyCloset.Services.CrudServices
 			IAccountProvider accountProvider
 		) : base(pieces, contextTools)
 		{
+			Pieces = pieces;
 			Files = files;
 			TagService = tagService;
 			ContextTools = contextTools;
@@ -98,5 +100,12 @@ namespace MyCloset.Services.CrudServices
 			foreach (var pieceModel in pieceModels)
 				await UpdateAsync(pieceModel.FillTags(savedTags).Update(piecesDictionary[pieceModel.Id.Value]));
 		}
+
+		public async Task<IEnumerable<Piece>> FilteredAsync(IPieceQueryFilter queryFilter, int start, int quantity)
+			=> await Pieces.FilteredAsync(queryFilter, start, quantity);
+
+		public async Task<int> FilteredRowCountAsync(IPieceQueryFilter queryFilter)
+			=> await Pieces.FilteredRowCountAsync(queryFilter);
+
 	}
 }

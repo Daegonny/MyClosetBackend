@@ -11,9 +11,8 @@ using Util.Services;
 
 namespace Infra.NH
 {
-	public abstract class NHRepository<T, Q> : IRepository<T, Q>
+	public abstract class NHRepository<T> : IRepository<T>
 		where T : Entity, new()
-		where Q : IQueryFilter<T>
 	{
 		IUnitOfWork UnitOfWork { get; }
 		IContextTools ContextTools { get; }
@@ -67,15 +66,6 @@ namespace Infra.NH
 		}
 
 		public async Task UpdateAsync(T entity)
-			=> await UnitOfWork.Session.UpdateAsync(entity);
-
-		public async Task<IEnumerable<T>> FilteredAsync(Q queryFilter, int start, int quantity) 
-			=> await PagedAsync(queryFilter.ApplyFilters(Query()), start, quantity);
-
-		async Task<IEnumerable<T>> PagedAsync(IQueryOver<T,T> query, int start, int quantity)
-			=> await query.OrderBy(q => q.Creation).Desc().Skip(start).Take(quantity).ListAsync();
-
-		public async Task<int> FilteredRowCountAsync(Q queryFilter)
-			=> await queryFilter.ApplyFilters(Query()).Select(Projections.CountDistinct(Projections.Id())).SingleOrDefaultAsync<int>();
+			=> await UnitOfWork.Session.UpdateAsync(entity);	
 	}
 }

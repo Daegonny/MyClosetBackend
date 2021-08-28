@@ -9,7 +9,7 @@ using Util.Services;
 
 namespace MyCloset.Infra.NH.Repositories
 {
-	public class Tags : NHRepository<Tag, ITagQueryFilter>, ITags
+	public class Tags : NHRepository<Tag>, ITags
 	{
 		public Tags(IUnitOfWork unitOfWork, IContextTools contextTools, IAccountProvider accountProvider) 
 			: base(unitOfWork, contextTools, accountProvider)

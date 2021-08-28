@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace MyCloset.Services.Abstractions.CrudServices
 {
-	public interface IPieceService : ICrudService<Piece, IPieceQueryFilter>
+	public interface IPieceService : ICrudService<Piece>
 	{
+		Task<IEnumerable<Piece>> FilteredAsync(IPieceQueryFilter queryFilter, int start, int quantity);
+		Task<int> FilteredRowCountAsync(IPieceQueryFilter queryFilter);
 		Task RemoveAsync(IEnumerable<long> ids);
 		Task SaveFromFilesAsync(IFormFileCollection files);
 		Task UpdateAsync(PieceModel pieceModel);

@@ -14,7 +14,7 @@ namespace MyCloset.Domain.Entities
 		public virtual Account Account { get; set; }
 		public SecretCode(){}
 
-		public bool AssertIsOwnedBy(Account account)
+		public virtual bool AssertIsOwnedBy(Account account)
 		{
 			if (Account.Id != account.Id)
 				throw new AccessDeniedException();
@@ -24,7 +24,7 @@ namespace MyCloset.Domain.Entities
 		bool IsExpired(DateTime today) 
 			=> today > Expiration;
 
-		public bool IsNotExpired(DateTime today) 
+		public virtual bool IsNotExpired(DateTime today) 
 			=> !IsExpired(today);
 	}
 }

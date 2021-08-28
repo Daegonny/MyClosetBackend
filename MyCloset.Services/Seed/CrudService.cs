@@ -8,16 +8,14 @@ using Util.Services;
 
 namespace MyCloset.Services.Seed
 {
-	public class CrudService<T, Q> : ICrudService<T, Q>
-		where T : Entity
-		where Q : IQueryFilter<T>
+	public class CrudService<T> : ICrudService<T> where T : Entity
 	{
-		protected IRepository<T, Q> Repository { get; }
+		protected IRepository<T> Repository { get; }
 		IContextTools ContextTools { get; }
 
 		public CrudService
 		(
-			IRepository<T, Q> repository, 
+			IRepository<T> repository, 
 			IContextTools contextTools
 		)
 		{
@@ -37,12 +35,6 @@ namespace MyCloset.Services.Seed
 
 		public async Task<IEnumerable<T>> SaveAsync(IEnumerable<T> entities) 
 			=> await Repository.SaveAsync(entities);
-
-		public async Task<IEnumerable<T>> FilteredAsync(Q queryFilter, int start, int quantity) 
-			=> await Repository.FilteredAsync(queryFilter, start, quantity);
-
-		public async Task<int> FilteredRowCountAsync(Q queryFilter)
-			=> await Repository.FilteredRowCountAsync(queryFilter);
 
 		public async Task UpdateAsync(T entity)
 		{

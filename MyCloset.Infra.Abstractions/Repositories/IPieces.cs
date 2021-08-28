@@ -4,7 +4,8 @@ using MyCloset.Infra.Abstractions.QueryFilters;
 
 namespace MyCloset.Infra.Abstractions.Repositories
 {
-	public interface IPieces : IRepository<Piece, IPieceQueryFilter>
+	public interface IPieces : IRepository<Piece>, 
+		IFiltrableRepository<Piece, IPieceQueryFilter>
 	{
 	}
 }
