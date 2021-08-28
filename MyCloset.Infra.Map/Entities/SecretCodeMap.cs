@@ -1,15 +1,13 @@
-﻿using FluentNHibernate.Mapping;
-using MyCloset.Domain.Entities;
+﻿using MyCloset.Domain.Entities;
 using MyCloset.Domain.Enums;
+using MyCloset.Infra.Map.Seed;
 
 namespace MyCloset.Infra.Map.Entities
 {
-	public class SecretCodeMap : ClassMap<SecretCode>
+	public class SecretCodeMap : EntityMap<SecretCode>
 	{
-		public SecretCodeMap()
+		public SecretCodeMap() : base()
 		{
-			Id(x => x.Id).GeneratedBy.Identity();
-			Map(x => x.Value);
 			Map(x => x.Type).CustomType<SecretCodeType>(); ;
 			Map(x => x.Activation);
 			Map(x => x.Expiration);

@@ -1,13 +1,12 @@
-﻿using Exceptions.Auth;
+﻿using Base.Domain;
+using Exceptions.Auth;
 using MyCloset.Domain.Enums;
 using System;
 
 namespace MyCloset.Domain.Entities
 {
-	public class SecretCode : IHaveOwner
+	public class SecretCode : Entity, IHaveOwner
 	{
-		public virtual long Id { get; set; }
-		public virtual string Value { get; set; }
 		public virtual SecretCodeType Type { get; set; }
 		public virtual DateTime Activation { get; set; }
 		public virtual DateTime Expiration { get; set; }
