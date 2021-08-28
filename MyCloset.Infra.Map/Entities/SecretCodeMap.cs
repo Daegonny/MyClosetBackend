@@ -8,6 +8,7 @@ namespace MyCloset.Infra.Map.Entities
 	{
 		public SecretCodeMap() : base()
 		{
+			Table("secret_code");
 			Map(x => x.Type).CustomType<SecretCodeType>(); ;
 			Map(x => x.Activation);
 			Map(x => x.Expiration);

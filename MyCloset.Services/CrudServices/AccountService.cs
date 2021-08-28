@@ -19,6 +19,7 @@ namespace MyCloset.Services.CrudServices
 		IFiles Files { get; }
 		IAccountProvider AccountProvider { get; }
 		ITokenService TokenService { get; }
+		ISecretCodeService SecretCodeService { get; }
 		IContextTools ContextTools { get; }
 
 		public AccountService
@@ -28,6 +29,7 @@ namespace MyCloset.Services.CrudServices
 			IFiles files,
 			IAccountProvider accountProvider,
 			ITokenService tokenService,
+			ISecretCodeService secretCodeService,
 			IContextTools contextTools
 		) 
 			: base(accounts, contextTools)
@@ -37,6 +39,7 @@ namespace MyCloset.Services.CrudServices
 			Files = files;
 			AccountProvider = accountProvider;
 			TokenService = tokenService;
+			SecretCodeService = secretCodeService;
 			ContextTools = contextTools;
 		}
 
@@ -72,8 +75,8 @@ namespace MyCloset.Services.CrudServices
 
 			if (await AccountExists(model.Email))
 				throw new AccountAlreadyExistsException();
-			
-			//TODO: validar secretCode
+
+			await SecretCodeService.Consume(model.SecretCode);
 		}
 
 		public async Task<bool> AccountExists(string email) 

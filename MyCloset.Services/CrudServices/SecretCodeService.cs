@@ -6,7 +6,6 @@ using MyCloset.Infra.Abstractions.Repositories;
 using MyCloset.Services.Abstractions.CrudServices;
 using MyCloset.Services.Seed;
 using Resources;
-using System;
 using System.Threading.Tasks;
 using Util.Extensions;
 using Util.Services;

@@ -65,11 +65,13 @@ namespace API
 				.AddScoped<IFiles, Files>()
 				.AddScoped<IPieces, Pieces>()
 				.AddScoped<IAccounts, Accounts>()
+				.AddScoped<ISecretCodes, SecretCodes>()
 				.AddScoped<IPieceService, PieceService>()
 				.AddScoped<IAccountService, AccountService>()
 				.AddScoped<ITagService, TagService>()
 				.AddScoped<ITokenService, TokenService>()
 				.AddScoped<IAuthService, AuthService>()
+				.AddScoped<ISecretCodeService, SecretCodeService>()
 				.AddScoped<PieceFilterResolver>()
 				.AddControllers(options => {
 					options.Filters.Add(typeof(NHibernateUnitOfWorkActionFilter));
