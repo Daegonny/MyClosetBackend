@@ -7,6 +7,7 @@ namespace MyCloset.Services.Abstractions.CrudServices
 {
 	public interface IAccountService : ICrudService<Account>
 	{
+		Task<bool> EnsureNotExists(string email);
 		Task SaveAsync(AccountModel model);
 		Task<string> UpdateAsync(AccountModel model);
 	}

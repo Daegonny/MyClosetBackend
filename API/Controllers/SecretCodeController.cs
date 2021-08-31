@@ -1,12 +1,9 @@
-﻿
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyCloset.Domain.Entities;
 using MyCloset.Domain.Enums;
 using MyCloset.Services.Abstractions.CrudServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+
 using System.Threading.Tasks;
 using Util.Config;
 using Util.Extensions;
@@ -31,7 +28,7 @@ namespace API.Controllers
 
 
 		[AllowAnonymous]
-		[HttpPost]
+		[HttpPost] //TODO: REMOVER
 		public async Task<ActionResult<string>> Create(string expiration)
 		{
 			var secretCode = new SecretCode()
@@ -46,10 +43,8 @@ namespace API.Controllers
 		}
 
 		[AllowAnonymous]
-		[HttpGet]
-		public async Task<ActionResult> CheckAvailability(string code, SecretCodeType type)
-		{
-			return Ok(await SecretCodeService.CheckAvailability(code, type));
-		}
+		[HttpGet("CheckAvailability")]
+		public async Task<ActionResult<bool>> CheckAvailability(string code, SecretCodeType type) 
+			=> Ok(await SecretCodeService.CheckAvailability(code, type));
 	}
 }

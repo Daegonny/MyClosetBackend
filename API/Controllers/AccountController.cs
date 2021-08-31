@@ -19,6 +19,7 @@ namespace API.Controllers
 		}
 
 		[HttpPost]
+		[AllowAnonymous]
 		public async Task<ActionResult<string>> Save(AccountModel model)
 		{
 			await AccountService.SaveAsync(model);
@@ -33,5 +34,10 @@ namespace API.Controllers
 			var response = new SimpleResponse(token, Resource.UpdateAccountOk);
 			return Ok(response);
 		}
+
+		[AllowAnonymous]
+		[HttpGet("CheckAvailability")]
+		public async Task<ActionResult<bool>> CheckAvailability(string email)
+			=> Ok(await AccountService.EnsureNotExists(email));
 	}
 }

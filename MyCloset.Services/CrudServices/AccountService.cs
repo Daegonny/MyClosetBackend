@@ -68,19 +68,21 @@ namespace MyCloset.Services.CrudServices
 		{
 			model.Validate();
 			if (model.Email != account.Email)
-				if (await AccountExists(model.Email))
-					throw new AccountAlreadyExistsException();
+				await EnsureNotExists(model.Email);
 		}
 
 		async Task ValidateOnSave(AccountModel model)
 		{
 			model.Validate();
-
-			if (await AccountExists(model.Email))
-				throw new AccountAlreadyExistsException();
+			await EnsureNotExists(model.Email);
 		}
 
-		public async Task<bool> AccountExists(string email) 
-			=> (await Accounts.ByEmailAsync(email)).NotNull();
+		public async Task<bool> EnsureNotExists(string email)
+		{
+			var account = await Accounts.ByEmailAsync(email);
+			if(account.NotNull())
+				throw new AccountAlreadyExistsException();
+			return true;
+		}
 	}
 }
