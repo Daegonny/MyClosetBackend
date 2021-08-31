@@ -31,19 +31,22 @@ namespace Infra.NH
 			LoggedUser = accountProvider.GetLoggedUser();
 		}
 
-		protected virtual IQueryOver<T, T> Query()
+		protected virtual IQueryOver<T, T> QueryFilteringOwner()
 		{
 			return typeof(IHaveOwner).IsAssignableFrom(typeof(T))
 				 ? UnitOfWork.Session.QueryOver<T>(() => Alias)
 					.Where(T => ((IHaveOwner) T).Account.Id == LoggedUser.Id)
-				: UnitOfWork.Session.QueryOver<T>(() => Alias);
+				: Query();
 		}
 
+		protected virtual IQueryOver<T, T> Query() 
+			=> UnitOfWork.Session.QueryOver<T>(() => Alias);
+
 		public async Task<T> ByIdAsync(long id) 
-			=> await Query().Where(x => x.Id == id).SingleOrDefaultAsync<T>();
+			=> await QueryFilteringOwner().Where(x => x.Id == id).SingleOrDefaultAsync<T>();
 
 		public async Task<IEnumerable<T>> ByIdsAsync(IEnumerable<long> ids)
-			=> await Query().WhereRestrictionOn(x => x.Id).IsInG(ids).ListAsync();
+			=> await QueryFilteringOwner().WhereRestrictionOn(x => x.Id).IsInG(ids).ListAsync();
 
 		public async Task RemoveAsync(T entity)
 			=> await UnitOfWork.Session.DeleteAsync(entity);

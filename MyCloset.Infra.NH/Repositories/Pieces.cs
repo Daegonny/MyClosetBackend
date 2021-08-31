@@ -27,12 +27,12 @@ namespace MyCloset.Infra.NH.Repositories
 		}
 
 		public async Task<IEnumerable<Piece>> FilteredAsync(PieceQueryFilter filter, int start, int quantity)
-			=> await PagedAsync(FilterResolver.ApplyFilters(Query(), filter), start, quantity);
+			=> await PagedAsync(FilterResolver.ApplyFilters(QueryFilteringOwner(), filter), start, quantity);
 
 		async Task<IEnumerable<Piece>> PagedAsync(IQueryOver<Piece, Piece> query, int start, int quantity)
 			=> await query.OrderBy(q => q.Creation).Desc().Skip(start).Take(quantity).ListAsync();
 
 		public async Task<int> FilteredRowCountAsync(PieceQueryFilter filter)
-			=> await FilterResolver.ApplyFilters(Query(), filter).Select(Projections.CountDistinct(Projections.Id())).SingleOrDefaultAsync<int>();
+			=> await FilterResolver.ApplyFilters(QueryFilteringOwner(), filter).Select(Projections.CountDistinct(Projections.Id())).SingleOrDefaultAsync<int>();
 	}
 }

@@ -16,6 +16,6 @@ namespace MyCloset.Infra.NH.Repositories
 		}
 
 		public async Task<IEnumerable<Tag>> ByNamesAsync(IEnumerable<string> tagNames)
-			=> await Query().WhereRestrictionOn(t => t.Name).IsInG(tagNames).ListAsync();
+			=> await QueryFilteringOwner().WhereRestrictionOn(t => t.Name).IsInG(tagNames).ListAsync();
 	}
 }

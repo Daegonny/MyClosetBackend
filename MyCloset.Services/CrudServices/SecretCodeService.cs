@@ -2,6 +2,7 @@
 using Exceptions.BadRequest;
 using Exceptions.NotFound;
 using MyCloset.Domain.Entities;
+using MyCloset.Domain.Enums;
 using MyCloset.Infra.Abstractions.Repositories;
 using MyCloset.Services.Abstractions.CrudServices;
 using MyCloset.Services.Seed;
@@ -15,33 +16,30 @@ namespace MyCloset.Services.CrudServices
 	public class SecretCodeService : CrudService<SecretCode>, ISecretCodeService
 	{
 		ISecretCodes SecretCodes { get; }
-		IAccountProvider AccountProvider { get; }
 		IContextTools ContextTools { get; }
 
 		public SecretCodeService
 		(
 			ISecretCodes secretCodes,
-			IAccountProvider accountProvider,
 			IContextTools contextTools
 		) 
 			: base(secretCodes, contextTools)
 		{
 			SecretCodes = secretCodes;
-			AccountProvider = accountProvider;
 			ContextTools = contextTools;
 		}
 
-		public async Task Consume(string name)
+		public async Task Consume(Account account, string name, SecretCodeType type)
 		{
-			var secretCode = await SecretCodes.ByNameAsync(name);
+			var secretCode = await SecretCodes.ByNameAndTypeAsync(name, type);
 			CheckAvailability(secretCode);
-			secretCode.Account = AccountProvider.GetLoggedUser();
+			secretCode.Account = account;
 			secretCode.Activation = ContextTools.Now();
 			await UpdateAsync(secretCode);
 		}
 
-		public async Task<bool> CheckAvailability(string name) 
-			=> CheckAvailability(await SecretCodes.ByNameAsync(name));
+		public async Task<bool> CheckAvailability(string name, SecretCodeType type) 
+			=> CheckAvailability(await SecretCodes.ByNameAndTypeAsync(name, type));
 
 		bool CheckAvailability(SecretCode secretCode)
 		{

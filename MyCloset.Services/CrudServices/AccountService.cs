@@ -1,6 +1,7 @@
 ﻿using Auth.Abstractions;
 using Exceptions.Auth;
 using MyCloset.Domain.Entities;
+using MyCloset.Domain.Enums;
 using MyCloset.Domain.Models;
 using MyCloset.Infra.Abstractions.Repositories;
 using MyCloset.Services.Abstractions.CrudServices;
@@ -48,6 +49,8 @@ namespace MyCloset.Services.CrudServices
 			await ValidateOnSave(model);
 
 			var account = model.ToEntity(ContextTools.Now(), HashConfig.Secret);
+			await SecretCodeService.Consume(account, model.SecretCode, SecretCodeType.CreateAccount);
+
 			Files.CreateDirectory(ContextTools.DefaultBasePath(), account.HashedFilePath);
 			await SaveAsync(account);
 		}
@@ -75,8 +78,6 @@ namespace MyCloset.Services.CrudServices
 
 			if (await AccountExists(model.Email))
 				throw new AccountAlreadyExistsException();
-
-			await SecretCodeService.Consume(model.SecretCode);
 		}
 
 		public async Task<bool> AccountExists(string email) 
