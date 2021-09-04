@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Exceptions.Auth;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyCloset.Domain.Entities;
 using MyCloset.Domain.Enums;
@@ -28,18 +29,15 @@ namespace API.Controllers
 
 
 		[AllowAnonymous]
-		[HttpPost] //TODO: REMOVER
-		public async Task<ActionResult<string>> Create(string expiration)
+		[HttpPost]
+		public async Task<ActionResult<string>> Create(string pass, string expiration)
 		{
-			var secretCode = new SecretCode()
-			{
-				Name = "código".Encrypt(ContextTools.Now(), HashConfig.Secret),
-				Type = SecretCodeType.CreateAccount,
-				Expiration = expiration.ToDate()
-			};
+			if (pass != HashConfig.Secret)
+				throw new InvalidPassException();
 
-			await SecretCodeService.SaveAsync(secretCode);
-			return Ok(secretCode.Name);
+			var code = await SecretCodeService.Create(expiration.ToDate(), HashConfig.Secret);
+
+			return Ok(code);
 		}
 
 		[AllowAnonymous]
