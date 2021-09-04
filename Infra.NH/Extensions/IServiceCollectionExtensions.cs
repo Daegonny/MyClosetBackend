@@ -9,13 +9,13 @@ namespace Infra.NH.Extensions
 
 	public static class IServiceCollectionExtensions
 	{
-		public static IServiceCollection AddNHibernate(this IServiceCollection serviceCollection, string connectionString)
+		public static IServiceCollection AddNHibernate(this IServiceCollection serviceCollection, string connectionString, string schema)
 		{
 			var config = Fluently
 							.Configure()
 							.Database(
 									PostgreSQLConfiguration.PostgreSQL82.ConnectionString(connectionString)
-									.DefaultSchema("my_closet_schema")
+									.DefaultSchema(schema)
 									.ShowSql()
 									.FormatSql()
 									)

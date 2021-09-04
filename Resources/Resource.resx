@@ -147,6 +147,9 @@
   <data name="FileNotFound" xml:space="preserve">
     <value>Não foi possível encontrar arquivo {0}.</value>
   </data>
+  <data name="InvalidPass" xml:space="preserve">
+    <value>Passe inválido.</value>
+  </data>
   <data name="LoginFailed" xml:space="preserve">
     <value>Email ou senha incorretos.</value>
   </data>

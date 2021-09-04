@@ -151,6 +151,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Passe inválido..
+        /// </summary>
+        public static string InvalidPass {
+            get {
+                return ResourceManager.GetString("InvalidPass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email ou senha incorretos..
         /// </summary>
         public static string LoginFailed {
