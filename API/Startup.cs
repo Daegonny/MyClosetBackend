@@ -29,6 +29,7 @@ namespace API
 		public IHashConfig HashConfig { get; set; }
 		public ITokenConfig TokenConfig { get; set; }
 		public string ConnectionString { get; set; }
+		public string Schema { get; set; }
 		public Startup(IConfiguration configuration)
 		{
 			var pathSettings = configuration.GetSection("Path");
@@ -43,6 +44,7 @@ namespace API
 				pathSettings.GetSection("DefaultUser").Value, 
 				pathSettings.GetSection("DefaultBase").Value);
 			ConnectionString = configuration.GetSection("ConnectionString").Value;
+			Schema = configuration.GetSection("Schema").Value;
 			HashConfig = new HashConfig(configuration.GetSection("Secret").Value);
 		}
 
@@ -58,7 +60,7 @@ namespace API
 				.AddSingleton(HashConfig)
 				.AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
 				.AddScoped<IAccountProvider, AccountProvider>()
-				.AddNHibernate(ConnectionString)
+				.AddNHibernate(ConnectionString, Schema)
 				.AddScoped<NHibernateUnitOfWorkActionFilter>()
 				.AddScoped<IContextTools, ContextTools>()
 				.AddScoped<ITags, Tags>()
