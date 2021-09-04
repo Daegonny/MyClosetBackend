@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyCloset.Domain.Entities;
 using MyCloset.Domain.Models;
-using MyCloset.Infra.NH.QueryFilters;
+using MyCloset.Domain.QueryFilters;
 using MyCloset.Services.Abstractions.CrudServices;
 using Resources;
 using System;

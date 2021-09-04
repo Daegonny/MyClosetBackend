@@ -12,6 +12,7 @@
     <ProjectReference Include="..\Base.Domain\Base.Domain.csproj" />
     <ProjectReference Include="..\MyCloset.Domain\MyCloset.Domain.csproj" />
     <ProjectReference Include="..\MyCloset.Infra.Abstractions\MyCloset.Infra.Abstractions.csproj" />
+    <ProjectReference Include="..\MyCloset.Infra.NH\MyCloset.Infra.NH.csproj" />
   </ItemGroup>
 
 </Project>

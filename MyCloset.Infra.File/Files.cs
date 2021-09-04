@@ -54,6 +54,9 @@ namespace MyCloset.Infra.File
 			{
 				throw new Exceptions.NotFound.FileNotFoundException(fullFilePath, exception);
 			}
-		} 
+		}
+
+		public void CreateDirectory(string basePath, string path) 
+			=> Directory.CreateDirectory(ContextTools.CombinePaths(basePath, path));
 	}
 }

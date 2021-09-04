@@ -1,7 +1,4 @@
-﻿using Auth.Abstractions;
-using MyCloset.Domain.Entities;
-using MyCloset.Domain.Models;
-using MyCloset.Infra.Abstractions.QueryFilters;
+﻿using MyCloset.Domain.Entities;
 using MyCloset.Infra.Abstractions.Repositories;
 using MyCloset.Services.Abstractions.CrudServices;
 using MyCloset.Services.Seed;
@@ -13,7 +10,7 @@ using Util.Services;
 
 namespace MyCloset.Services.CrudServices
 {
-	public class TagService : CrudService<Tag, ITagQueryFilter>, ITagService
+	public class TagService : CrudService<Tag>, ITagService
 	{
 		ITags Tags { get; }
 		public TagService(ITags tags, IContextTools contextTools) 

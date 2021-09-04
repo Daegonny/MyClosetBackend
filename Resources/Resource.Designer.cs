@@ -70,6 +70,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email pertence a uma conta já existente..
+        /// </summary>
+        public static string AccountAlreadyExists {
+            get {
+                return ResourceManager.GetString("AccountAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Perfil cadastrado..
+        /// </summary>
+        public static string CreateAccountOk {
+            get {
+                return ResourceManager.GetString("CreateAccountOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0 } Peças salvas..
         /// </summary>
         public static string CreateMultiplePieceOk {
@@ -84,6 +102,24 @@ namespace Resources {
         public static string CreatePieceOk {
             get {
                 return ResourceManager.GetString("CreatePieceOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email.
+        /// </summary>
+        public static string EmailField {
+            get {
+                return ResourceManager.GetString("EmailField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email e email de confirmação são diferentes..
+        /// </summary>
+        public static string EmailNotEqualsConfirmation {
+            get {
+                return ResourceManager.GetString("EmailNotEqualsConfirmation", resourceCulture);
             }
         }
         
@@ -124,6 +160,42 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} deve ser maior que {1}..
+        /// </summary>
+        public static string MinLengthError {
+            get {
+                return ResourceManager.GetString("MinLengthError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nome.
+        /// </summary>
+        public static string NameField {
+            get {
+                return ResourceManager.GetString("NameField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Senha.
+        /// </summary>
+        public static string PasswordField {
+            get {
+                return ResourceManager.GetString("PasswordField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Senha e senha de confirmação são diferentes..
+        /// </summary>
+        public static string PasswordNotEqualsConfirmation {
+            get {
+                return ResourceManager.GetString("PasswordNotEqualsConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} Peças removidas..
         /// </summary>
         public static string RemoveMultiplePieceOk {
@@ -138,6 +210,42 @@ namespace Resources {
         public static string RemovePieceOk {
             get {
                 return ResourceManager.GetString("RemovePieceOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Código não encontrado..
+        /// </summary>
+        public static string SecredCodeNotFound {
+            get {
+                return ResourceManager.GetString("SecredCodeNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Código expirado..
+        /// </summary>
+        public static string SecretCodeExpired {
+            get {
+                return ResourceManager.GetString("SecretCodeExpired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Código já foi usado..
+        /// </summary>
+        public static string SecretCodeUnavailable {
+            get {
+                return ResourceManager.GetString("SecretCodeUnavailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Perfil atualizado..
+        /// </summary>
+        public static string UpdateAccountOk {
+            get {
+                return ResourceManager.GetString("UpdateAccountOk", resourceCulture);
             }
         }
         

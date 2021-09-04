@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using MyCloset.Domain.Entities;
 using MyCloset.Domain.Models;
-using MyCloset.Infra.Abstractions.QueryFilters;
+using MyCloset.Domain.QueryFilters;
 using MyCloset.Infra.Abstractions.Repositories;
 using MyCloset.Infra.File;
 using MyCloset.Services.Abstractions.CrudServices;
@@ -11,16 +11,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Util.Config;
 using Util.Extensions;
 using Util.Services;
 
 namespace MyCloset.Services.CrudServices
 {
-	public class PieceService : CrudService<Piece, IPieceQueryFilter>, IPieceService
+	public class PieceService : CrudService<Piece>, IPieceService
 	{
+		IPieces Pieces { get; }
 		IFiles Files { get; }
 		ITagService TagService { get; }
 		IContextTools ContextTools { get; }
+		IHashConfig HashConfig { get; }
 		Account LoggedUser { get; }
 
 		public PieceService
@@ -29,12 +32,15 @@ namespace MyCloset.Services.CrudServices
 			IFiles files,
 			ITagService tagService,
 			IContextTools contextTools,
+			IHashConfig hashConfig,
 			IAccountProvider accountProvider
 		) : base(pieces, contextTools)
 		{
+			Pieces = pieces;
 			Files = files;
 			TagService = tagService;
 			ContextTools = contextTools;
+			HashConfig = hashConfig;
 			LoggedUser = accountProvider.GetLoggedUser();
 		}
 
@@ -48,7 +54,7 @@ namespace MyCloset.Services.CrudServices
 		async Task SaveFromFileAsync(DateTime todayDate, IFormFile file)
 		{
 			var fileName = ContextTools.GetFileName(file.FileName);
-			var hashedFileName = (fileName + ContextTools.Now().ToString()).Hash();
+			var hashedFileName = fileName.Encrypt(ContextTools.Now(), HashConfig.Secret);
 			var extension = ContextTools.GetFileExtension(file.ContentType);
 			var piece = new Piece(LoggedUser)
 				.Fill(fileName, hashedFileName, extension, LoggedUser.HashedFilePath, todayDate);
@@ -94,5 +100,12 @@ namespace MyCloset.Services.CrudServices
 			foreach (var pieceModel in pieceModels)
 				await UpdateAsync(pieceModel.FillTags(savedTags).Update(piecesDictionary[pieceModel.Id.Value]));
 		}
+
+		public async Task<IEnumerable<Piece>> FilteredAsync(PieceQueryFilter queryFilter, int start, int quantity)
+			=> await Pieces.FilteredAsync(queryFilter, start, quantity);
+
+		public async Task<int> FilteredRowCountAsync(PieceQueryFilter queryFilter)
+			=> await Pieces.FilteredRowCountAsync(queryFilter);
+
 	}
 }

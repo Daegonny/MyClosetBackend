@@ -7,7 +7,7 @@ namespace MyCloset.Infra.Map.Entities
 	{
 		public AccountMap()
 		{
-			Table("Account");
+			Table("account");
 			Map(x => x.Email);
 			Map(x => x.Password).LazyLoad();
 			Map(x => x.HashedFilePath).Column("hashed_file_path");

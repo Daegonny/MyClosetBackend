@@ -120,11 +120,23 @@
   <data name="AccessDenied" xml:space="preserve">
     <value>Acesso negado.</value>
   </data>
+  <data name="AccountAlreadyExists" xml:space="preserve">
+    <value>Email pertence a uma conta já existente.</value>
+  </data>
+  <data name="CreateAccountOk" xml:space="preserve">
+    <value>Perfil cadastrado.</value>
+  </data>
   <data name="CreateMultiplePieceOk" xml:space="preserve">
     <value>{0 } Peças salvas.</value>
   </data>
   <data name="CreatePieceOk" xml:space="preserve">
     <value>Peça salva.</value>
+  </data>
+  <data name="EmailField" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="EmailNotEqualsConfirmation" xml:space="preserve">
+    <value>Email e email de confirmação são diferentes.</value>
   </data>
   <data name="EntityNotFoundMultiple" xml:space="preserve">
     <value>Não foi possível encontrar as entidades {0}.</value>
@@ -138,11 +150,35 @@
   <data name="LoginFailed" xml:space="preserve">
     <value>Email ou senha incorretos.</value>
   </data>
+  <data name="MinLengthError" xml:space="preserve">
+    <value>{0} deve ser maior que {1}.</value>
+  </data>
+  <data name="NameField" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="PasswordField" xml:space="preserve">
+    <value>Senha</value>
+  </data>
+  <data name="PasswordNotEqualsConfirmation" xml:space="preserve">
+    <value>Senha e senha de confirmação são diferentes.</value>
+  </data>
   <data name="RemoveMultiplePieceOk" xml:space="preserve">
     <value>{0} Peças removidas.</value>
   </data>
   <data name="RemovePieceOk" xml:space="preserve">
     <value>Peça removida.</value>
+  </data>
+  <data name="SecredCodeNotFound" xml:space="preserve">
+    <value>Código não encontrado.</value>
+  </data>
+  <data name="SecretCodeExpired" xml:space="preserve">
+    <value>Código expirado.</value>
+  </data>
+  <data name="SecretCodeUnavailable" xml:space="preserve">
+    <value>Código já foi usado.</value>
+  </data>
+  <data name="UpdateAccountOk" xml:space="preserve">
+    <value>Perfil atualizado.</value>
   </data>
   <data name="UpdatePieceOk" xml:space="preserve">
     <value>Peça atulizada.</value>

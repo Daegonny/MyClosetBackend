@@ -12,7 +12,5 @@
 			Id = id;
 			Name = name;
 		}
-
-		public abstract T Update(T entity);
 	}
 }

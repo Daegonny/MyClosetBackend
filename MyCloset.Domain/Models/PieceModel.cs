@@ -16,7 +16,7 @@ namespace MyCloset.Domain.Models
 		[JsonIgnore]
 		public List<Tag> Tags { get; private set; }
 
-		public override Piece Update(Piece entity)
+		public Piece Update(Piece entity)
 		{
 			entity.Name = Name;
 			entity.Price = Price;
