@@ -26,10 +26,10 @@ namespace Auth
 		private IEnumerable<Claim> GetClaims(Account user)
 			=> new[]
 			{
-				new Claim(nameof(Account.Id), user.Id.ToString()),
-				new Claim(nameof(Account.Email), user.Email),
-				new Claim(nameof(Account.Name), user.Name),
-				new Claim(nameof(Account.HashedFilePath), user.HashedFilePath),
+				new Claim(nameof(Account.Id).ToLower(), user.Id.ToString()),
+				new Claim(nameof(Account.Email).ToLower(), user.Email),
+				new Claim(nameof(Account.Name).ToLower(), user.Name),
+				new Claim(nameof(Account.HashedFilePath).ToLower(), user.HashedFilePath),
 			};
 
 		private SigningCredentials GetCredentials()

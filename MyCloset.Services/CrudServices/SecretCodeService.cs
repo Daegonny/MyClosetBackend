@@ -1,5 +1,4 @@
-﻿using Auth.Abstractions;
-using Exceptions.BadRequest;
+﻿using Exceptions.BadRequest;
 using Exceptions.NotFound;
 using MyCloset.Domain.Entities;
 using MyCloset.Domain.Enums;

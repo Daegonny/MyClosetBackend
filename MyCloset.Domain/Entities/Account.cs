@@ -25,18 +25,18 @@ namespace MyCloset.Domain.Entities
 		public Account(ClaimsIdentity identity)
 		{
 			var claims = identity.Claims.ToDictionary(c => c.Type.ToString(), c => c.Value);
+
+			if (claims.ContainsKey(nameof(Id).ToLower()))
+				Id = Convert.ToInt64(claims[nameof(Id).ToLower()]);
 			
-			if (claims.ContainsKey(nameof(Id)))
-				Id = Convert.ToInt64(claims[nameof(Id)]);
+			if (claims.ContainsKey(nameof(Name).ToLower()))
+				Name = claims[nameof(Name).ToLower()];
 			
-			if (claims.ContainsKey(nameof(Name)))
-				Name = claims[nameof(Name)];
+			if (claims.ContainsKey(nameof(Email).ToLower()))
+				Email = claims[nameof(Email).ToLower()];
 			
-			if (claims.ContainsKey(nameof(Email)))
-				Email = claims[nameof(Email)];
-			
-			if (claims.ContainsKey(nameof(HashedFilePath)))
-				HashedFilePath = claims[nameof(HashedFilePath)];
+			if (claims.ContainsKey(nameof(HashedFilePath).ToLower()))
+				HashedFilePath = claims[nameof(HashedFilePath).ToLower()];
 		}
 	}
 }
