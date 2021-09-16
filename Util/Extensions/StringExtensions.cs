@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
@@ -121,5 +122,8 @@ namespace Util.Extensions
 
 		public static bool IsNullOrEmpty(this string input) 
 			=> input.IsNull() || input.Trim().Length == 0;
+
+		public static bool IsNotValidEmail(this string input)
+			=> string.IsNullOrEmpty(input) || !(new EmailAddressAttribute().IsValid(input));
 	}
 }

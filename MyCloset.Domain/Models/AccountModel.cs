@@ -40,7 +40,7 @@ namespace MyCloset.Domain.Models
 			if (Name.Length < 2)
 				throw new BadRequestException(string.Format(Resource.MinLengthError, Resource.NameField, 2));
 
-			if (Email.Length < 4) //TODO: Escrever validação de email com regex
+			if (Email.IsNotValidEmail())
 				throw new BadRequestException(string.Format(Resource.MinLengthError, Resource.EmailField, 4));
 
 			if (Password.Length < 6)
