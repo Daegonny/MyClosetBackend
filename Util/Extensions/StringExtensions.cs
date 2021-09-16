@@ -18,6 +18,7 @@ namespace Util.Extensions
 			{ 'ä','a' },
 			{ 'b','b' },
 			{ 'c','c' },
+			{ 'ĉ','c' },
 			{ 'ç','c' },
 			{ 'd','d' },
 			{ 'e','e' },
@@ -27,13 +28,16 @@ namespace Util.Extensions
 			{ 'ë','e' },
 			{ 'f','f' },
 			{ 'g','g' },
+			{ 'ĝ','g' },
 			{ 'h','h' },
+			{ 'ĥ','h' },
 			{ 'i','i' },
 			{ 'í','i' },
 			{ 'ì','i' },
 			{ 'î','i' },
 			{ 'ï','i' },
 			{ 'j','j' },
+			{ 'ĵ','j' },
 			{ 'k','k' },
 			{ 'l','l' },
 			{ 'm','m' },
@@ -49,6 +53,7 @@ namespace Util.Extensions
 			{ 'q','q' },
 			{ 'r','r' },
 			{ 's','s' },
+			{ 'ŝ','s' },
 			{ 't','t' },
 			{ 'u','u' },
 			{ 'ú','u' },
@@ -69,7 +74,9 @@ namespace Util.Extensions
 			{ '6','6' },
 			{ '7','7' },
 			{ '8','8' },
-			{ '9','9' }
+			{ '9','9' },
+			{ '-','-' },
+			{ '_','_' }
 		};
 		public static T Deserialize<T>(this string json)
 			=> JsonConvert.DeserializeObject<T>(json);
