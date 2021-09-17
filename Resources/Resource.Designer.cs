@@ -180,9 +180,9 @@ namespace Resources {
         /// <summary>
         ///   Looks up a localized string similar to {0} deve ser maior que {1}..
         /// </summary>
-        public static string MinLengthError {
+        public static string MinSizeError {
             get {
-                return ResourceManager.GetString("MinLengthError", resourceCulture);
+                return ResourceManager.GetString("MinSizeError", resourceCulture);
             }
         }
         
@@ -219,6 +219,15 @@ namespace Resources {
         public static string PasswordNotEqualsConfirmation {
             get {
                 return ResourceManager.GetString("PasswordNotEqualsConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preço.
+        /// </summary>
+        public static string PriceField {
+            get {
+                return ResourceManager.GetString("PriceField", resourceCulture);
             }
         }
         
@@ -264,6 +273,15 @@ namespace Resources {
         public static string SecretCodeUnavailable {
             get {
                 return ResourceManager.GetString("SecretCodeUnavailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tags.
+        /// </summary>
+        public static string TagsField {
+            get {
+                return ResourceManager.GetString("TagsField", resourceCulture);
             }
         }
         

@@ -98,6 +98,7 @@ namespace MyCloset.Services.CrudServices
 
 		public async Task UpdateAsync(PieceModel pieceModel)
 		{
+			pieceModel.Validate();
 			var piece = await ByIdAsync(pieceModel.Id.Value);
 
 			piece.AssertIsNotNull(pieceModel.Id.Value)
@@ -105,12 +106,15 @@ namespace MyCloset.Services.CrudServices
 
 			var savedTags = await TagService.SaveUniqueAsync(pieceModel.TagNames);
 			pieceModel.FillTags(savedTags);
+
 			await UpdateAsync(pieceModel.Update(piece));
 		}
 
 		public async Task UpdateAsync(IEnumerable<PieceModel> pieceModels)
 		{
-			//TODO: VALIDAR SE HÁ IDS REPETIDOS
+			foreach(var model in pieceModels)
+				model.Validate();
+
 			var pieces = await ByIdsAsync(pieceModels.Select(m => m.Id.Value));
 			var piecesDictionary = new Dictionary<long, Piece>();
 			foreach (var piece in pieces)
@@ -123,10 +127,10 @@ namespace MyCloset.Services.CrudServices
 		}
 
 		public async Task<IEnumerable<Piece>> FilteredAsync(PieceQueryFilter queryFilter, int start, int quantity)
-			=> await Pieces.FilteredAsync(queryFilter, start, quantity);
+			=> await Pieces.FilteredAsync(queryFilter.Validate(), start, quantity);
 
 		public async Task<int> FilteredRowCountAsync(PieceQueryFilter queryFilter)
-			=> await Pieces.FilteredRowCountAsync(queryFilter);
+			=> await Pieces.FilteredRowCountAsync(queryFilter.Validate());
 
 	}
 }

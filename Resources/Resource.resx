@@ -156,7 +156,7 @@
   <data name="LoginFailed" xml:space="preserve">
     <value>Email ou senha incorretos.</value>
   </data>
-  <data name="MinLengthError" xml:space="preserve">
+  <data name="MinSizeError" xml:space="preserve">
     <value>{0} deve ser maior que {1}.</value>
   </data>
   <data name="NameField" xml:space="preserve">
@@ -170,6 +170,9 @@
   </data>
   <data name="PasswordNotEqualsConfirmation" xml:space="preserve">
     <value>Senha e senha de confirmação são diferentes.</value>
+  </data>
+  <data name="PriceField" xml:space="preserve">
+    <value>Preço</value>
   </data>
   <data name="RemoveMultiplePieceOk" xml:space="preserve">
     <value>{0} Peças removidas.</value>
@@ -185,6 +188,9 @@
   </data>
   <data name="SecretCodeUnavailable" xml:space="preserve">
     <value>Código já foi usado.</value>
+  </data>
+  <data name="TagsField" xml:space="preserve">
+    <value>Tags</value>
   </data>
   <data name="UpdateAccountOk" xml:space="preserve">
     <value>Perfil atualizado.</value>
