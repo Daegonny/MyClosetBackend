@@ -15,11 +15,8 @@ namespace Util.Services
 		public DateTime Now() => DateTime.Now;
 		public DateTime Today() => DateTime.Today;
 		public string DefaultBasePath() => PathConfig.DefaultBasePath;
-		public string DefaultUserPath() => PathConfig.DefaultUserPath;
 		public string CombinePaths(string basePath, string subPath) => Path.Join(basePath, subPath);
 		public string GetFileName(string s) => s.Substring(0, s.LastIndexOf("."));
 		public string GetFileExtension(string s) => s.Split("/")[1];
-		public string FileExtension() => "png";
-		public string DefaultFileType() => "image/png";
 	}
 }

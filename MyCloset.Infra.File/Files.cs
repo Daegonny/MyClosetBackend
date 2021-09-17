@@ -43,7 +43,20 @@ namespace MyCloset.Infra.File
 			return pathName;
 		}
 
-		public byte[] Read(string basePath, string path, string name) 
-			=> System.IO.File.ReadAllBytes(FullFilePath(basePath, path, name));//TODO: SE IMAGEM NÃO EXISTIR, RETORNAR DUMMY
+		public byte[] Read(string basePath, string path, string name)
+		{
+			var fullFilePath = FullFilePath(basePath, path, name);
+			try
+			{
+				return System.IO.File.ReadAllBytes(fullFilePath);
+			}
+			catch (DirectoryNotFoundException exception)
+			{
+				throw new Exceptions.NotFound.FileNotFoundException(fullFilePath, exception);
+			}
+		}
+
+		public void CreateDirectory(string basePath, string path) 
+			=> Directory.CreateDirectory(ContextTools.CombinePaths(basePath, path));
 	}
 }

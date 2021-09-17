@@ -9,19 +9,21 @@ namespace Infra.NH.Extensions
 
 	public static class IServiceCollectionExtensions
 	{
-		public static IServiceCollection AddNHibernate(this IServiceCollection serviceCollection, string connectionString)
+		public static IServiceCollection AddNHibernate(this IServiceCollection serviceCollection, string connectionString, 
+			string schema, bool enableSqlVerbose)
 		{
+
+			var dataBase = PostgreSQLConfiguration.PostgreSQL82.ConnectionString(connectionString).DefaultSchema(schema);
+			if (enableSqlVerbose)
+				dataBase.ShowSql().FormatSql();
+
 			var config = Fluently
-							.Configure()
-							.Database(
-									PostgreSQLConfiguration.PostgreSQL82.ConnectionString(connectionString)
-									.DefaultSchema("my_closet_schema")
-									.ShowSql()
-									.FormatSql()
-									)
-							.Mappings(m => m.FluentMappings.AddFromAssemblyOf<IMap>()
-												.Conventions.Add(ForeignKey.EndsWith(string.Empty)))
-							.BuildConfiguration();
+				.Configure()
+				.Database(dataBase)
+				.Mappings(m => m.FluentMappings.AddFromAssemblyOf<IMap>()
+									.Conventions.Add(ForeignKey.EndsWith(string.Empty)))
+				.BuildConfiguration();
+
 			var sessionFactory = config.BuildSessionFactory();
 			serviceCollection
 				.AddSingleton<ISessionFactory>(sessionFactory)
