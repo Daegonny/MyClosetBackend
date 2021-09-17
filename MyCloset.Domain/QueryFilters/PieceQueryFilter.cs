@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Util.Extensions;
 using System.Linq;
+using Exceptions.BadRequest;
+using Resources;
 
 namespace MyCloset.Domain.QueryFilters
 {
@@ -35,5 +37,13 @@ namespace MyCloset.Domain.QueryFilters
 		}
 
 		public PieceQueryFilter(){}
+
+		public PieceQueryFilter Validate()
+		{
+			if (TagNames.Count() > 10)
+				throw new BadRequestException(string.Format(Resource.OverLimitError, Resource.TagsField, 10));
+
+			return this;
+		}
 	}
 }

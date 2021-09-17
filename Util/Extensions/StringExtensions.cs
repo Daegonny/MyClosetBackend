@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
@@ -18,6 +19,7 @@ namespace Util.Extensions
 			{ 'ä','a' },
 			{ 'b','b' },
 			{ 'c','c' },
+			{ 'ĉ','c' },
 			{ 'ç','c' },
 			{ 'd','d' },
 			{ 'e','e' },
@@ -27,13 +29,16 @@ namespace Util.Extensions
 			{ 'ë','e' },
 			{ 'f','f' },
 			{ 'g','g' },
+			{ 'ĝ','g' },
 			{ 'h','h' },
+			{ 'ĥ','h' },
 			{ 'i','i' },
 			{ 'í','i' },
 			{ 'ì','i' },
 			{ 'î','i' },
 			{ 'ï','i' },
 			{ 'j','j' },
+			{ 'ĵ','j' },
 			{ 'k','k' },
 			{ 'l','l' },
 			{ 'm','m' },
@@ -49,6 +54,7 @@ namespace Util.Extensions
 			{ 'q','q' },
 			{ 'r','r' },
 			{ 's','s' },
+			{ 'ŝ','s' },
 			{ 't','t' },
 			{ 'u','u' },
 			{ 'ú','u' },
@@ -69,7 +75,9 @@ namespace Util.Extensions
 			{ '6','6' },
 			{ '7','7' },
 			{ '8','8' },
-			{ '9','9' }
+			{ '9','9' },
+			{ '-','-' },
+			{ '_','_' }
 		};
 		public static T Deserialize<T>(this string json)
 			=> JsonConvert.DeserializeObject<T>(json);
@@ -114,5 +122,8 @@ namespace Util.Extensions
 
 		public static bool IsNullOrEmpty(this string input) 
 			=> input.IsNull() || input.Trim().Length == 0;
+
+		public static bool IsNotValidEmail(this string input)
+			=> string.IsNullOrEmpty(input) || !(new EmailAddressAttribute().IsValid(input));
 	}
 }

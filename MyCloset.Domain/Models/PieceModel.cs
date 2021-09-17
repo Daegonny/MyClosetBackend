@@ -1,5 +1,7 @@
 ﻿using Base.Domain;
+using Exceptions.BadRequest;
 using MyCloset.Domain.Entities;
+using Resources;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
@@ -33,6 +35,15 @@ namespace MyCloset.Domain.Models
 				Tags.Add(tagsDictionary[tagKey]);
 			
 			return this;
+		}
+
+		public void Validate()
+		{
+			if (Price < 0)
+				throw new BadRequestException(string.Format(Resource.MinSizeError, Resource.NameField, 0));
+
+			if (TagNames.Count() > 10)
+				throw new BadRequestException(string.Format(Resource.OverLimitError, Resource.TagsField, 10));
 		}
 	}
 }
