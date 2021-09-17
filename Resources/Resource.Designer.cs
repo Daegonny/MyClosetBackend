@@ -142,6 +142,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} possui formato de arquivo não suportado ({1})..
+        /// </summary>
+        public static string FileExtensionError {
+            get {
+                return ResourceManager.GetString("FileExtensionError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Não foi possível encontrar arquivo {0}..
         /// </summary>
         public static string FileNotFound {
@@ -183,6 +192,15 @@ namespace Resources {
         public static string NameField {
             get {
                 return ResourceManager.GetString("NameField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} está além do limite ({1}) permitido..
+        /// </summary>
+        public static string OverLimitError {
+            get {
+                return ResourceManager.GetString("OverLimitError", resourceCulture);
             }
         }
         

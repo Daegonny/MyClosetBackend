@@ -18,6 +18,5 @@ namespace Util.Services
 		public string CombinePaths(string basePath, string subPath) => Path.Join(basePath, subPath);
 		public string GetFileName(string s) => s.Substring(0, s.LastIndexOf("."));
 		public string GetFileExtension(string s) => s.Split("/")[1];
-		public string DefaultFileType() => "image/png";
 	}
 }

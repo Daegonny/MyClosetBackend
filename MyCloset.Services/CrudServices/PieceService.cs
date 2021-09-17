@@ -1,4 +1,5 @@
 ﻿using Auth.Abstractions;
+using Exceptions.BadRequest;
 using Microsoft.AspNetCore.Http;
 using MyCloset.Domain.Entities;
 using MyCloset.Domain.Models;
@@ -7,8 +8,10 @@ using MyCloset.Infra.Abstractions.Repositories;
 using MyCloset.Infra.File;
 using MyCloset.Services.Abstractions.CrudServices;
 using MyCloset.Services.Seed;
+using Resources;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using Util.Config;
@@ -24,6 +27,7 @@ namespace MyCloset.Services.CrudServices
 		ITagService TagService { get; }
 		IContextTools ContextTools { get; }
 		IHashConfig HashConfig { get; }
+		IImageFileConfig ImageFileConfig { get; }
 		Account LoggedUser { get; }
 
 		public PieceService
@@ -33,6 +37,7 @@ namespace MyCloset.Services.CrudServices
 			ITagService tagService,
 			IContextTools contextTools,
 			IHashConfig hashConfig,
+			IImageFileConfig imageFileConfig,
 			IAccountProvider accountProvider
 		) : base(pieces, contextTools)
 		{
@@ -41,14 +46,30 @@ namespace MyCloset.Services.CrudServices
 			TagService = tagService;
 			ContextTools = contextTools;
 			HashConfig = hashConfig;
+			ImageFileConfig = imageFileConfig;
 			LoggedUser = accountProvider.GetLoggedUser();
 		}
 
 		public async Task SaveFromFilesAsync(IFormFileCollection files)
 		{
+			validateFiles(files);
 			var todayDate = ContextTools.Today();
+			foreach(var file in files)
+					await SaveFromFileAsync(todayDate, file);
+		}
+
+		void validateFiles(IFormFileCollection files)
+		{ 
+			var limit = ImageFileConfig.PixeLimit;
 			foreach (var file in files)
-				await SaveFromFileAsync(todayDate, file);
+			{
+				if (file.ContentType != ImageFileConfig.ContentType)
+					throw new BadRequestException(string.Format(Resource.FileExtensionError, file.FileName, file.ContentType));
+
+				using (var image = Image.FromStream(file.OpenReadStream()))
+					if (image.IsOverPixelLimit(limit))
+						throw new BadRequestException(string.Format(Resource.OverLimitError, file.FileName, $"{limit}px"));
+			}
 		}
 
 		async Task SaveFromFileAsync(DateTime todayDate, IFormFile file)

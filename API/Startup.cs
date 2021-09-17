@@ -20,6 +20,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Http;
 using MyCloset.Infra.NH.FilterResolvers;
+using System.Linq;
 
 namespace API
 {
@@ -28,6 +29,7 @@ namespace API
 		public IPathConfig PathConfig { get; set; }
 		public IHashConfig HashConfig { get; set; }
 		public ITokenConfig TokenConfig { get; set; }
+		public IImageFileConfig ImageFileConfig { get; set; }
 		public string ConnectionString { get; set; }
 		public string Schema { get; set; }
 		public bool EnableSwagger { get; set; }
@@ -36,6 +38,7 @@ namespace API
 		{
 			var pathSettings = configuration.GetSection("Path");
 			var tokenSettings = configuration.GetSection("Token");
+			var imageFileSettings = configuration.GetSection("ImageFile");
 			
 			TokenConfig = new TokenConfig(
 				int.Parse(tokenSettings.GetSection("ExpirationTimeInSeconds").Value), 
@@ -45,6 +48,11 @@ namespace API
 			PathConfig = new PathConfig(
 				pathSettings.GetSection("DefaultUser").Value, 
 				pathSettings.GetSection("DefaultBase").Value);
+			ImageFileConfig = new ImageFileConfig(
+				int.Parse(imageFileSettings.GetSection("PixeLimit").Value),
+				imageFileSettings.GetSection("Extension").Value,
+				imageFileSettings.GetSection("ContentType").Value
+			);
 			ConnectionString = configuration.GetSection("ConnectionString").Value;
 			Schema = configuration.GetSection("Schema").Value;
 			EnableSwagger = bool.Parse(configuration.GetSection("EnableSwagger").Value);
@@ -63,6 +71,7 @@ namespace API
 				.AddSingleton(PathConfig)
 				.AddSingleton(TokenConfig)
 				.AddSingleton(HashConfig)
+				.AddSingleton(ImageFileConfig)
 				.AddSingleton<IHttpContextAccessor, HttpContextAccessor>()
 				.AddScoped<IAccountProvider, AccountProvider>()
 				.AddNHibernate(ConnectionString, Schema, EnableSqlVerbose)

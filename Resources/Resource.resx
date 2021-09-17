@@ -144,6 +144,9 @@
   <data name="EntityNotFoundSingle" xml:space="preserve">
     <value>Não foi possível encontrar a entidade {0}.</value>
   </data>
+  <data name="FileExtensionError" xml:space="preserve">
+    <value>{0} possui formato de arquivo não suportado ({1}).</value>
+  </data>
   <data name="FileNotFound" xml:space="preserve">
     <value>Não foi possível encontrar arquivo {0}.</value>
   </data>
@@ -158,6 +161,9 @@
   </data>
   <data name="NameField" xml:space="preserve">
     <value>Nome</value>
+  </data>
+  <data name="OverLimitError" xml:space="preserve">
+    <value>{0} está além do limite ({1}) permitido.</value>
   </data>
   <data name="PasswordField" xml:space="preserve">
     <value>Senha</value>
