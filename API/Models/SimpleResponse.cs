@@ -1,4 +1,4 @@
-﻿namespace MyCloset.Domain.Models
+﻿namespace API.Models
 {
 	public class SimpleResponse
 	{
